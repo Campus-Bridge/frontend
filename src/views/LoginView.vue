@@ -84,6 +84,7 @@
 </template>
 
 <script lang="ts" setup>
+import router from '@/router'
 import axios from 'axios'
 import { ref } from 'vue'
 
@@ -99,12 +100,21 @@ const resetForm = () => {
   showPassword.value = false
 }
 
-const submitForm = () => {
-  const response = axios.post('/login', {
-    email: email.value,
-    password: password.value,
-    rememberMe: rememberMe.value
+const submitForm = async () => {
+  const response = await axios.get('/user/login', {
+    params: {
+      email: email.value,
+      password: password.value,
+      rememberMe: rememberMe.value
+    }
   })
+  console.log(response)
+  if (response.status === 200) {
+    localStorage.setItem('token', response.data)
+    router.push('/about')
+  } else {
+    console.log('Login Failed')
+  }
 }
 </script>
 

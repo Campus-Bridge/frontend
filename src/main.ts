@@ -5,6 +5,9 @@ import { Quasar } from 'quasar'
 import '@quasar/extras/material-icons/material-icons.css'
 import 'quasar/src/css/index.sass'
 
+import axios from 'axios'
+axios.defaults.baseURL = 'http://localhost:3000/api/'
+
 import App from './App.vue'
 import router from './router'
 

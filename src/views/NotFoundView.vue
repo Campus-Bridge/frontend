@@ -1,5 +1,5 @@
 <template>
-  <p>about</p>
+  <h1>Not Found</h1>
 </template>
 
 <script setup lang="ts"></script>
