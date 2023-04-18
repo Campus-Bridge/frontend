@@ -87,6 +87,7 @@
 import router from '@/router'
 import axios from 'axios'
 import { ref } from 'vue'
+import { useCookies } from 'vue3-cookies'
 
 const email = ref('')
 const password = ref('')
@@ -104,14 +105,14 @@ const submitForm = async () => {
   const response = await axios.get('/user/login', {
     params: {
       email: email.value,
-      password: password.value,
-      rememberMe: rememberMe.value
+      password: password.value
     }
   })
-  console.log(response)
   if (response.status === 200) {
-    localStorage.setItem('token', response.data)
-    router.push('/about')
+    const { cookies } = useCookies()
+    const expires = rememberMe.value ? '30d' : '1h'
+    cookies.set('token', response.data, expires, '/', 'localhost', true, 'Strict')
+    router.push('/dashboard')
   } else {
     console.log('Login Failed')
   }

@@ -19,8 +19,9 @@ const app = createApp(App)
 app.use(Quasar, {
   plugins: {} // import Quasar plugins and add here
 })
+const pinia = createPinia()
 
-app.use(createPinia())
+app.use(pinia)
 app.use(router)
 app.use(i18n)
 

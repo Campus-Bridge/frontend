@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import axios from 'axios'
+import { useCookies } from 'vue3-cookies'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,12 +25,25 @@ const router = createRouter({
     }
   ]
 })
+
 let isLogin = false
 const isUserLoggedIn = async () => {
+  let token = undefined
+  const { cookies } = useCookies()
+  if (cookies.isKey('token')) {
+    token = cookies.get('token')
+  } else {
+    token = undefined
+  }
+
+  if (token === undefined) {
+    return false
+  }
+
   if (isLogin) {
     return true
   }
-  const token = localStorage.getItem('token')
+
   const response = await axios.get('http://localhost:3000/api/user/checkToken', {
     headers: {
       Authorization: token
@@ -48,13 +62,15 @@ router.beforeEach(async (to, from, next) => {
   if (await isUserLoggedIn()) {
     if (to.name === 'home') {
       next({ name: 'dashboard' })
+    } else {
+      next()
     }
-    next()
   } else {
     if (to.name !== 'home') {
       next({ name: 'home' })
+    } else {
+      next()
     }
-    next()
   }
 })
 
