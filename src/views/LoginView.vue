@@ -1,85 +1,145 @@
 <template>
-  <div class="full-width row justify-center">
-    <div class="col-6 login-background">
-      <div class="fit column justify-center items-center">
-        <p>Logo</p>
-        <q-img
-          src="../assets/imgs/Mobile.svg"
-          spinner-color="primary"
-          spinner-size="82px"
-          width="75%"
-          height="75%"
-        />
-        <p>asd</p>
-      </div>
-    </div>
-    <div class="col-6 row justify-center items-center">
-      <div class="login">
-        <h2>Welcome</h2>
-        <p>Log In your account!</p>
-        <q-form @submit="onSubmit" @reset="onReset">
-          <q-input
-            filled
-            v-model="email"
-            label="Your email *"
-            lazy-rules
-            :rules="[(val) => (val && val.length > 0) || 'Please type your email']"
+  <div class="loginView">
+    <header>
+      <q-img
+        src="@/assets/imgs/CAMPUSBRIDGE_LIGHT.svg"
+        style="width: 250px"
+        spinner-color="primary"
+        spinner-size="82px"
+      />
+    </header>
+    <main>
+      <h2 class="q-mb-sm">Welcome Back!</h2>
+      <h5 class="text-grey q-mb-md">Enter your detail to sign in.</h5>
+      <q-form @reset="resetForm" @submit="submitForm">
+        <q-input
+          v-model="email"
+          label="Email"
+          type="email"
+          standout="bg-primary text-white"
+          class="q-mb-md text-h5"
+        >
+          <template v-slot:prepend>
+            <q-icon name="mail" />
+          </template>
+        </q-input>
+        <q-input
+          v-model="password"
+          label="Password"
+          :type="showPassword ? 'text' : 'password'"
+          standout="bg-primary text-white"
+          class="q-mb-lg text-h5"
+        >
+          <template v-slot:prepend>
+            <q-icon name="password" />
+          </template>
+          <template v-slot:append>
+            <q-icon
+              :name="showPassword ? 'visibility' : 'visibility_off'"
+              @click="showPassword = !showPassword"
+              class="cursor-pointer"
+            >
+              <q-tooltip anchor="top middle" self="bottom middle">
+                {{ showPassword ? 'Hide Password' : 'Show Password' }}
+              </q-tooltip>
+            </q-icon>
+          </template>
+        </q-input>
+        <div style="display: flex; justify-content: space-between">
+          <q-checkbox
+            v-model="rememberMe"
+            label="Remember me"
+            class="q-mb-md"
+            color="primary"
+            dense
           />
-          <br />
-          <q-input
-            filled
-            type="password"
-            v-model="password"
-            label="Your password *"
-            lazy-rules
-            :rules="[(val) => (val !== null && val !== '') || 'Please type your password']"
-          >
-            <template v-slot:append>
-              <q-icon name="visibility" @click="password = ''" class="cursor-pointer" />
-            </template>
-          </q-input>
-          <div>
-            <q-btn label="Submit" type="submit" color="primary" />
-            <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
-          </div>
-        </q-form>
-      </div>
-    </div>
+          <q-btn
+            label="Forgot Password?"
+            flat
+            rounded
+            class="text-primary text-weight-bold q-mb-md"
+          />
+        </div>
+        <div style="display: flex">
+          <q-btn
+            type="reset"
+            label="Reset"
+            style="width: 50%"
+            outline
+            rounded
+            class="text-primary text-weight-bold q-mb-md"
+          />
+          <q-btn
+            type="submit"
+            label="Login"
+            flat
+            rounded
+            style="width: 50%"
+            class="bg-primary text-white text-weight-bold q-mb-md q-ml-md"
+          />
+        </div>
+      </q-form>
+    </main>
   </div>
-  <!-- <a href="https://storyset.com/online">Online illustrations by Storyset</a> -->
 </template>
 
 <script lang="ts" setup>
+import router from '@/router'
+import axios from 'axios'
 import { ref } from 'vue'
+import { useCookies } from 'vue3-cookies'
 
 const email = ref('')
 const password = ref('')
+const rememberMe = ref(false)
+const showPassword = ref(false)
 
-const onSubmit = (evt: Event) => {
-  evt.preventDefault() // don't submit the form
-  console.log('submit: ', email.value, password.value)
-}
-
-const onReset = () => {
+const resetForm = () => {
   email.value = ''
   password.value = ''
-  console.log('reset')
+  rememberMe.value = false
+  showPassword.value = false
+}
+
+const submitForm = async () => {
+  const response = await axios.get('/user/login', {
+    params: {
+      email: email.value,
+      password: password.value
+    }
+  })
+  if (response.status === 200) {
+    const { cookies } = useCookies()
+    const expires = rememberMe.value ? '30d' : '1h'
+    cookies.set('token', response.data, expires, '/', 'localhost', true, 'Strict')
+    router.push('/dashboard')
+  } else {
+    console.log('Login Failed')
+  }
 }
 </script>
 
 <style scoped>
-.login-background {
-  background-color: #ff725e;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+.loginView {
+  display: grid;
+  align-items: center;
+  grid-template-rows: 1fr 10fr;
+  height: 100vh;
+  width: 100vw;
+  background-image: url('@/assets/imgs/TLO.svg');
 }
-
-.login {
+.loginView header {
+  display: flex;
+  align-items: center;
+  margin-left: 6.25rem;
+}
+.loginView main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 100%;
-  width: 60%;
+  margin-left: 12.5rem;
+}
+
+form {
+  width: 30%;
 }
 </style>
