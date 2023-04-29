@@ -4,4 +4,15 @@ import { RouterView } from 'vue-router'
 
 <template><router-view /></template>
 
-<style scoped></style>
+<style lang="scss">
+.application {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  padding: 16px;
+}
+
+body.body--light {
+  background: $light-page;
+}
+</style>
