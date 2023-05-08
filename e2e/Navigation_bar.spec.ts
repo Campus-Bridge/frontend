@@ -61,3 +61,11 @@ test('Account', async ({page}) => {
 
   await expect(page.url()).toContain('/d')
 })
+
+test('Log out', async ({page}) => {
+
+  await page.click('nav button')
+  await page.waitForTimeout(3000)
+
+  await expect(page.url()).toBe('http://localhost:5173/')
+})
