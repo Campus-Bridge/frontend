@@ -1,21 +1,31 @@
 import { test, expect } from '@playwright/test'
 
-const { firefox } = require('playwright');
+test.afterEach(async ({page}) => {
 
-test('Log in', async () => {
+  await page.close()
+});
+test('Log in using correct credentials', async ({page}) => {
 
-  const browser = await firefox.launch()
-  const page = await browser.newPage()
   await page.goto('/')
 
   await page.fill('input[type="email"]', 'email1@example.com')
   await page.fill('input[type="password"]', 'password1')
-
-  await page.check('text=Remember me')
-
+  
   await page.click('button[type="submit"]')
-  await page.waitForNavigation();
+  await page.waitForTimeout(3000)
 
-  await expect(page.url()).toContain('/dashboard')
+  expect(page.url()).toContain('/dashboard')
+})
 
+test('Log in using incorrect credentials', async ({page}) => {
+
+  await page.goto('/')
+
+  await page.fill('input[type="email"]', 'email1321@example.com')
+  await page.fill('input[type="password"]', 'passwordD421')
+  
+  await page.click('button[type="submit"]')
+  await page.waitForTimeout(3000)
+
+  expect(page.url()).toBe('http://localhost:5173/')
 })
