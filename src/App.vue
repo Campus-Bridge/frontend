@@ -1,5 +1,13 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
+import { useQuasar } from 'quasar'
+
+const $q = useQuasar()
+if (localStorage.getItem('dark') === 'true') {
+  $q.dark.set(true)
+} else {
+  $q.dark.set(false)
+}
 </script>
 
 <template><router-view /></template>

@@ -57,7 +57,7 @@ declare global {
   const triggerRef: typeof import('vue')['triggerRef']
   const unref: typeof import('vue')['unref']
   const useAttrs: typeof import('vue')['useAttrs']
-  const useCounterStore: typeof import('./stores/counter')['useCounterStore']
+  const useCounterStore: typeof import('./stores/student')['useCounterStore']
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
   const useI18n: typeof import('vue-i18n')['useI18n']
@@ -132,7 +132,7 @@ declare module 'vue' {
     readonly triggerRef: UnwrapRef<typeof import('vue')['triggerRef']>
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
-    readonly useCounterStore: UnwrapRef<typeof import('./stores/counter')['useCounterStore']>
+    readonly useCounterStore: UnwrapRef<typeof import('./stores/student')['useCounterStore']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useI18n: UnwrapRef<typeof import('vue-i18n')['useI18n']>

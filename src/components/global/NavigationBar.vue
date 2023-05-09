@@ -94,7 +94,7 @@ const logOut = async () => {
 
 .body--light {
   section {
-    background-color: #f8f8f8;
+    background-color: $light-secondary;
   }
 
   a {
@@ -106,7 +106,7 @@ const logOut = async () => {
 }
 .body--dark {
   section {
-    background-color: #383b40;
+    background-color: $dark-secondary;
   }
   a {
     color: $grey-1;
