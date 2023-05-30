@@ -11,11 +11,16 @@
               Welcome
             </div>
           </q-card-section>
-          <q-card-section class="q-pt-none">
+          <q-card-section class="q-pt-none" v-if="dataStudentIsLoaded">
             <p>Index: 13540</p>
             <p>Kierunek: Informatyka Stosowana</p>
             <p>Ścieżka: Programowanie aplikacji</p>
           </q-card-section>
+          <q-inner-loading
+            :showing="!dataStudentIsLoaded"
+            label="Loading"
+            style="border-radius: 12px"
+          />
         </q-card>
         <q-card class="my-card finances" :class="nearFinanceStyle">
           <q-card-section class="q-pb-none">
@@ -98,6 +103,8 @@ import { useStudentStore } from '@/stores/student'
 import { useFinanceStore } from '@/stores/finance'
 const studentStore = useStudentStore()
 const { first_name, last_name, dataStudentIsLoaded, id } = storeToRefs(studentStore)
+
+// Get finance data
 const financeStore = useFinanceStore()
 const { nearFinanceStyle, nearFinanceData, dataFinanceIsLoaded } = storeToRefs(financeStore)
 
@@ -108,15 +115,6 @@ watch(id, () => {
     financeStore.getNearFinanceStyle()
   })
 })
-
-// const financeCardStyle = computed(() => {
-//   if (near_finance.value === null) return 'my-card'
-//   const { payment_deadline } = near_finance.value
-//   const date = new Date(payment_deadline)
-//   const today = new Date()
-//   if (date < today) return 'negative'
-//   else if (date.getDate() - today.getDate() <= 7) return 'warning'
-// })
 </script>
 <style lang="scss" scoped>
 @import '@/assets/quasar-variables.sass';
