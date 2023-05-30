@@ -5,7 +5,8 @@ import { useCookies } from 'vue3-cookies'
 
 export const useStudentStore = defineStore('student', () => {
   const { cookies } = useCookies()
-  const dataIsLoaded = ref(false)
+
+  const dataStudentIsLoaded = ref(false)
   const id = ref(0)
   const first_name = ref('')
   const last_name = ref('')
@@ -25,7 +26,7 @@ export const useStudentStore = defineStore('student', () => {
     return response.data.id
   }
 
-  async function loadStudent() {
+  const loadStudent = async () => {
     const userId = await getUserID()
     const response = await axios.get('http://localhost:3000/api/students/' + userId)
     id.value = response.data.id
@@ -36,13 +37,15 @@ export const useStudentStore = defineStore('student', () => {
     phone.value = response.data.phone
     index.value = response.data.index
     field_of_study.value = response.data.field_of_study
+    dataStudentIsLoaded.value = true
   }
-  if (!dataIsLoaded.value) {
+
+  if (!dataStudentIsLoaded.value) {
     loadStudent()
-    dataIsLoaded.value = true
   }
 
   return {
+    dataStudentIsLoaded,
     id,
     first_name,
     last_name,

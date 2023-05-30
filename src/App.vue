@@ -22,5 +22,7 @@ if (localStorage.getItem('dark') === 'true') {
 
 body.body--light {
   background: $light-page;
+
+  color: $grey-9;
 }
 </style>

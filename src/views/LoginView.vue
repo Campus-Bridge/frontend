@@ -4,7 +4,7 @@
       <q-img
         src="@/assets/imgs/CAMPUSBRIDGE_LIGHT.svg"
         style="width: 250px"
-        spinner-color="primary"
+        spinner-color="light-green-14"
         spinner-size="82px"
       />
     </header>
@@ -16,7 +16,7 @@
           v-model="email"
           label="Email"
           type="email"
-          standout="bg-primary text-white"
+          standout="bg-light-green-14 text-white"
           class="q-mb-md text-h5"
         >
           <template v-slot:prepend>
@@ -27,7 +27,7 @@
           v-model="password"
           label="Password"
           :type="showPassword ? 'text' : 'password'"
-          standout="bg-primary text-white"
+          standout="bg-light-green-14 text-white"
           class="q-mb-lg text-h5"
         >
           <template v-slot:prepend>
@@ -50,14 +50,14 @@
             v-model="rememberMe"
             label="Remember me"
             class="q-mb-md"
-            color="primary"
+            color="light-green-14"
             dense
           />
           <q-btn
             label="Forgot Password?"
             flat
             rounded
-            class="text-primary text-weight-bold q-mb-md"
+            class="text-light-green-14 text-weight-bold q-mb-md"
           />
         </div>
         <div style="display: flex">
@@ -67,7 +67,7 @@
             style="width: 50%"
             outline
             rounded
-            class="text-primary text-weight-bold q-mb-md"
+            class="text-light-green-14 text-weight-bold q-mb-md"
           />
           <q-btn
             type="submit"
@@ -75,7 +75,7 @@
             flat
             rounded
             style="width: 50%"
-            class="bg-primary text-white text-weight-bold q-mb-md q-ml-md"
+            class="bg-light-green-14 text-white text-weight-bold q-mb-md q-ml-md"
           />
         </div>
       </q-form>

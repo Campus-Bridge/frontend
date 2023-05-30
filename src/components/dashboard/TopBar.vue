@@ -3,7 +3,7 @@
     <div class="user_data">
       <q-img
         :src="getAvatar()"
-        spinner-color="primary"
+        spinner-color="light-green-14"
         spinner-size="32px"
         width="64px"
         height="64px"
@@ -15,19 +15,6 @@
       </div>
     </div>
     <div class="user_settings">
-      <!-- <q-input
-        v-model="text"
-        rounded
-        standout="bg-primary text-white"
-        color="text-white"
-        debounce="500"
-        type="search"
-        label="Search"
-      >
-        <template v-slot:append>
-          <q-icon name="search" />
-        </template>
-      </q-input> -->
       <q-fab flat icon="settings" vertical-actions-align="right" push direction="left">
         <q-fab-action
           :color="themeColor"
@@ -82,7 +69,7 @@ const ToggleTheme = () => {
 .topbar {
   width: 100%;
   height: 96px;
-  background: $primary;
+  background: $light-green-14;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -121,7 +108,7 @@ const ToggleTheme = () => {
   text-transform: capitalize;
   .user_image {
     border-radius: 50%;
-    border: 2px solid $primary;
+    border: 2px solid $light-green-14;
   }
 
   .user_name {
