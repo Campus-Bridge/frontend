@@ -12,7 +12,7 @@
             </q-icon>
           </router-link>
         </li>
-        <li>
+        <li data-testid='schedule'>
           <router-link to="/a">
             <q-icon name="today">
               <q-tooltip class="text-body2" anchor="center right" self="center left">
@@ -21,7 +21,7 @@
             </q-icon>
           </router-link>
         </li>
-        <li>
+        <li data-testid='grades'>
           <router-link to="/b">
             <q-icon name="grade">
               <q-tooltip class="text-body2" anchor="center right" self="center left">
@@ -30,7 +30,7 @@
             </q-icon>
           </router-link>
         </li>
-        <li>
+        <li data-testid='announcement'>
           <router-link to="/c">
             <q-icon name="announcement">
               <q-tooltip class="text-body2" anchor="center right" self="center left">
@@ -39,7 +39,7 @@
             </q-icon>
           </router-link>
         </li>
-        <li>
+        <li data-testid='finance'>
           <router-link to="/d">
             <q-icon name="account_balance">
               <q-tooltip class="text-body2" anchor="center right" self="center left">
@@ -48,7 +48,7 @@
             </q-icon>
           </router-link>
         </li>
-        <li>
+        <li data-testid='files'>
           <router-link to="/e">
             <q-icon name="cloud_download">
               <q-tooltip class="text-body2" anchor="center right" self="center left">
@@ -57,7 +57,7 @@
             </q-icon>
           </router-link>
         </li>
-        <li>
+        <li data-testid='account'>
           <router-link to="/d">
             <q-icon name="account_circle">
               <q-tooltip class="text-body2" anchor="center right" self="center left">
