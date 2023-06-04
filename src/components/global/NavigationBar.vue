@@ -67,7 +67,7 @@
           </router-link>
         </li>
       </ul>
-      <q-btn color="primary" unelevated round icon="logout" @click="logOut" />
+      <q-btn color="light-green-14" unelevated round icon="logout" @click="logOut" />
     </section>
   </nav>
 </template>
@@ -94,25 +94,25 @@ const logOut = async () => {
 
 .body--light {
   section {
-    background-color: #f8f8f8;
+    background-color: $light-secondary;
   }
 
   a {
     color: $grey-7;
   }
   .router-link-active {
-    color: $primary;
+    color: $light-green-14;
   }
 }
 .body--dark {
   section {
-    background-color: #383b40;
+    background-color: $dark-secondary;
   }
   a {
     color: $grey-1;
   }
   .router-link-active {
-    color: $primary;
+    color: $light-green-14;
   }
 }
 
@@ -154,6 +154,6 @@ a {
 }
 
 a:hover {
-  color: $primary;
+  color: $light-green-14;
 }
 </style>
