@@ -1,5 +1,13 @@
 {
-  "message": {
-    "hello": "Hello World!"
+  "navigation": {
+    "dashboard": "Dashboard",
+    "schedule": "Plan zajęć",
+    "grades": "Oceny",
+    "announcement": "Ogłoszenia",
+    "finance": "Finanse",
+    "files": "Pliki",
+    "account": "Konto"
   }
+
+  
 }
