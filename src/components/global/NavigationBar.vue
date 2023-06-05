@@ -40,7 +40,7 @@
           </router-link>
         </li>
         <li data-testid='finance'>
-          <router-link to="/d">
+          <router-link to="/finances">
             <q-icon name="account_balance">
               <q-tooltip class="text-body2" anchor="center right" self="center left">
                 Finance

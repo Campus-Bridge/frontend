@@ -19,6 +19,14 @@ const router = createRouter({
       }
     },
     {
+      path: '/finances',
+      name: 'finances',
+      component: () => import('../views/FinanceView.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       component: () => import('../views/NotFoundView.vue')
