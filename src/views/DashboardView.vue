@@ -117,7 +117,7 @@ watch(id, () => {
 })
 </script>
 <style lang="scss" scoped>
-@import '@/assets/quasar-variables.sass';
+@import '@/css/quasar-variables.sass';
 
 main {
   width: 100%;

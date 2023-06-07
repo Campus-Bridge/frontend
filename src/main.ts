@@ -11,7 +11,7 @@ axios.defaults.baseURL = 'http://localhost:3000/api/'
 import App from './App.vue'
 import router from './router'
 
-import './assets/main.css'
+import './css/main.css'
 import i18n from './modules/i18n'
 
 const app = createApp(App)
