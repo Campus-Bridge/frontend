@@ -19,7 +19,7 @@ export default defineConfig({
       template: { transformAssetUrls }
     }),
     quasar({
-      sassVariables: 'src/assets/quasar-variables.sass'
+      sassVariables: 'src/css/quasar-variables.sass'
     }),
     AutoImport({
       imports: ['vue', 'vue-router', 'vue-i18n', 'vue/macros'],
