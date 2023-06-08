@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { useStudentStore } from '@/stores/student'
 
 interface Finance {
   id: number
@@ -13,31 +14,18 @@ interface Finance {
 }
 
 export const useFinanceStore = defineStore('finance', () => {
-  const dataFinanceIsLoaded = ref(false)
+  const finances = ref<Finance[] | null>(null)
+  const nearFinance = ref<Finance | null>(null)
+  const nearFinanceStyle = ref<string | null>(null)
 
-  const finances = ref<Finance[]>([])
-  const nearFinanceStyle = ref({})
-  const nearFinanceData = ref<Finance>({
-    id: 0,
-    title: '',
-    amount: 0,
-    payment_deadline: '',
-    payment_deadline_date: '',
-    payment_date: '',
-    is_paid: false
-  })
-
-  const getFinance = async (id: number) => {
-    const response = await axios.get('http://localhost:3000/api/finances/' + id)
+  const getFinance = async () => {
+    const userStore = useStudentStore()
+    const response = await axios.get('http://localhost:3000/api/finances/' + userStore.student?.id)
     finances.value = response.data
-    dataFinanceIsLoaded.value = true
   }
 
-  const getNearFinanceData = async () => {
-    while (!dataFinanceIsLoaded.value) {
-      await new Promise((resolve) => setTimeout(resolve, 100))
-    }
-    const nearFinance = finances.value.filter((finance: any) => {
+  const getNearFinance = () => {
+    nearFinance.value = finances.value?.find((finance: any) => {
       const today = new Date()
       const financeDate = new Date(finance.payment_deadline)
 
@@ -45,44 +33,33 @@ export const useFinanceStore = defineStore('finance', () => {
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
 
       return finance.is_paid === false && (financeDate.getTime() < today.getTime() || diffDays < 7)
-    })
+    }) as Finance
 
-    const dateFinance = new Date(nearFinance[0].payment_deadline).toLocaleDateString()
-
-    nearFinanceData.value = {
-      id: nearFinance[0].id,
-      title: nearFinance[0].title,
-      amount: nearFinance[0].amount,
-      payment_deadline: nearFinance[0].payment_deadline,
-      payment_deadline_date: dateFinance,
-      payment_date: nearFinance[0].payment_date,
-      is_paid: nearFinance[0].is_paid
-    }
+    getNearFinanceStyle(nearFinance.value.payment_deadline)
+    const dateFinance = new Date(nearFinance.value.payment_deadline).toLocaleDateString()
+    nearFinance.value.payment_deadline_date = dateFinance
   }
 
-  const getNearFinanceStyle = () => {
+  const getNearFinanceStyle = (payment_deadline: string) => {
     const today = new Date()
-    const nearFinanceDate = new Date(nearFinanceData.value.payment_deadline)
-    const diffTime = Math.abs(nearFinanceDate.getTime() - today.getTime())
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-
-    if (today < nearFinanceDate) {
-      nearFinanceStyle.value = 'negative'
-    }
-    console.log(nearFinanceData.value.title, diffDays)
+    const nearFinanceDate = new Date(payment_deadline)
+    const diffTime = nearFinanceDate.getTime() - today.getTime()
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
 
     if (diffDays < 7) {
       nearFinanceStyle.value = 'warning'
+    }
+
+    if (diffDays <= 0) {
+      nearFinanceStyle.value = 'negative'
     }
   }
 
   return {
     finances,
+    nearFinance,
     nearFinanceStyle,
-    nearFinanceData,
-    dataFinanceIsLoaded,
     getFinance,
-    getNearFinanceData,
-    getNearFinanceStyle
+    getNearFinance
   }
 })

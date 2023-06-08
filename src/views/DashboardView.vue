@@ -2,7 +2,7 @@
   <div class="application">
     <NavigationBar />
     <main>
-      <TopBar :firstName="first_name" :lastName="last_name" />
+      <TopBar :firstName="student?.first_name" :lastName="student?.last_name" />
       <div class="cards">
         <q-card class="my-card welcome-card">
           <q-card-section class>
@@ -11,16 +11,12 @@
               Welcome
             </div>
           </q-card-section>
-          <q-card-section class="q-pt-none" v-if="dataStudentIsLoaded">
-            <p>Index: 13540</p>
+          <q-card-section class="q-pt-none" v-if="student">
+            <p>Index: {{ student.index }}</p>
             <p>Kierunek: Informatyka Stosowana</p>
             <p>Ścieżka: Programowanie aplikacji</p>
           </q-card-section>
-          <q-inner-loading
-            :showing="!dataStudentIsLoaded"
-            label="Loading"
-            style="border-radius: 12px"
-          />
+          <q-inner-loading :showing="!student" label="Loading" style="border-radius: 12px" />
         </q-card>
         <q-card class="my-card finances" :class="nearFinanceStyle">
           <q-card-section class="q-pb-none">
@@ -34,12 +30,12 @@
             enter-active-class="animated fadeIn"
             leave-active-class="animated fadeOut"
           >
-            <q-card-section class="q-pt-none" v-if="dataFinanceIsLoaded">
-              <div v-if="nearFinanceData.id !== 0">
-                <h6>Kwota: {{ nearFinanceData.amount }} PLN</h6>
+            <q-card-section class="q-pt-none" v-if="nearFinance">
+              <div v-if="nearFinance.id !== 0">
+                <h6>Kwota: {{ nearFinance.amount }} PLN</h6>
                 <p>
-                  {{ nearFinanceData.title }} -
-                  {{ nearFinanceData.payment_deadline_date }}
+                  {{ nearFinance.title }} -
+                  {{ nearFinance.payment_deadline_date }}
                 </p>
               </div>
               <div v-else>
@@ -47,11 +43,7 @@
               </div>
             </q-card-section>
           </transition>
-          <q-inner-loading
-            :showing="!dataFinanceIsLoaded"
-            label="Loading"
-            style="border-radius: 12px"
-          />
+          <q-inner-loading :showing="!nearFinance" label="Loading" style="border-radius: 12px" />
         </q-card>
         <q-card class="my-card announcements">
           <q-card-section>
@@ -99,21 +91,22 @@ import NavigationBar from '@/components/global/NavigationBar.vue'
 import TopBar from '@/components/dashboard/TopBar.vue'
 
 import { storeToRefs } from 'pinia'
+import { useUserStore } from '@/stores/user'
 import { useStudentStore } from '@/stores/student'
 import { useFinanceStore } from '@/stores/finance'
+const userStore = useUserStore()
 const studentStore = useStudentStore()
-const { first_name, last_name, dataStudentIsLoaded, id } = storeToRefs(studentStore)
-
-// Get finance data
 const financeStore = useFinanceStore()
-const { nearFinanceStyle, nearFinanceData, dataFinanceIsLoaded } = storeToRefs(financeStore)
 
-watch(id, () => {
-  financeStore.getFinance(id.value)
-  financeStore.getNearFinanceData()
-  watch(nearFinanceData, () => {
-    financeStore.getNearFinanceStyle()
-  })
+const { student } = storeToRefs(studentStore)
+const { nearFinance, nearFinanceStyle } = storeToRefs(financeStore)
+
+onMounted(async () => {
+  if (userStore.user?.role === 0) {
+    await studentStore.fetchStudent()
+    await financeStore.getFinance()
+    await financeStore.getNearFinance()
+  }
 })
 </script>
 <style lang="scss" scoped>
