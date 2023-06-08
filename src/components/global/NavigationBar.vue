@@ -73,19 +73,10 @@
 </template>
 
 <script lang="ts" setup>
-import router from '@/router'
-import axios from 'axios'
-import { useCookies } from 'vue3-cookies'
+import { useUserStore } from '@/stores/user'
 
 const logOut = async () => {
-  const response = await axios.get('/user/logout')
-  const { cookies } = useCookies()
-  cookies.remove('token')
-  if (response.status !== 200) {
-    console.log('Error logging out')
-    return
-  }
-  router.push({ name: 'home' })
+  await useUserStore().logOut()
 }
 </script>
 

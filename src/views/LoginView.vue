@@ -84,10 +84,8 @@
 </template>
 
 <script lang="ts" setup>
-import router from '@/router'
-import axios from 'axios'
 import { ref } from 'vue'
-import { useCookies } from 'vue3-cookies'
+import { useUserStore } from '@/stores/user'
 
 const email = ref('')
 const password = ref('')
@@ -102,20 +100,7 @@ const resetForm = () => {
 }
 
 const submitForm = async () => {
-  const response = await axios.get('/user/login', {
-    params: {
-      email: email.value,
-      password: password.value
-    }
-  })
-  if (response.status === 200) {
-    const { cookies } = useCookies()
-    const expires = rememberMe.value ? '30d' : '1h'
-    cookies.set('token', response.data, expires, '/', 'localhost', true, 'Strict')
-    router.push('/dashboard')
-  } else {
-    console.log('Login Failed')
-  }
+  await useUserStore().signIn(email.value, password.value, rememberMe.value)
 }
 </script>
 
