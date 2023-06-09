@@ -3,65 +3,11 @@
     <section>
       <q-img src="" alt="" width="100%" />
       <ul>
-        <li>
-          <router-link to="/dashboard">
-            <q-icon name="dashboard">
+        <li v-for="(item, index) in NavigationItem" :key="index">
+          <router-link :to="item.link">
+            <q-icon :name="item.icon">
               <q-tooltip class="text-body2" anchor="center right" self="center left">
-                Dashboard
-              </q-tooltip>
-            </q-icon>
-          </router-link>
-        </li>
-        <li data-testid="schedule">
-          <router-link to="/a">
-            <q-icon name="today">
-              <q-tooltip class="text-body2" anchor="center right" self="center left">
-                Schedule
-              </q-tooltip>
-            </q-icon>
-          </router-link>
-        </li>
-        <li data-testid="grades">
-          <router-link to="/b">
-            <q-icon name="grade">
-              <q-tooltip class="text-body2" anchor="center right" self="center left">
-                Grades
-              </q-tooltip>
-            </q-icon>
-          </router-link>
-        </li>
-        <li data-testid="announcement">
-          <router-link to="/c">
-            <q-icon name="announcement">
-              <q-tooltip class="text-body2" anchor="center right" self="center left">
-                Announcement
-              </q-tooltip>
-            </q-icon>
-          </router-link>
-        </li>
-        <li data-testid="finance">
-          <router-link to="/finances">
-            <q-icon name="account_balance">
-              <q-tooltip class="text-body2" anchor="center right" self="center left">
-                Finance
-              </q-tooltip>
-            </q-icon>
-          </router-link>
-        </li>
-        <li data-testid="files">
-          <router-link to="/e">
-            <q-icon name="cloud_download">
-              <q-tooltip class="text-body2" anchor="center right" self="center left">
-                Files
-              </q-tooltip>
-            </q-icon>
-          </router-link>
-        </li>
-        <li data-testid="account">
-          <router-link to="/d">
-            <q-icon name="account_circle">
-              <q-tooltip class="text-body2" anchor="center right" self="center left">
-                Account
+                {{ item.name }}
               </q-tooltip>
             </q-icon>
           </router-link>
@@ -74,6 +20,8 @@
 
 <script lang="ts" setup>
 import { useUserStore } from '@/stores/user'
+
+const NavigationItem = useUserStore().getNavigation()
 
 const logOut = async () => {
   await useUserStore().logOut()

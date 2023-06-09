@@ -10,6 +10,93 @@ interface User {
   username: string
 }
 
+interface NavigationItem {
+  name: string
+  icon: string
+  link: string
+}
+
+const studentNavigation = [
+  {
+    name: 'Dashboard',
+    icon: 'dashboard',
+    link: '/dashboard'
+  },
+  {
+    name: 'Schedule',
+    icon: 'today',
+    link: '/schedule'
+  },
+  {
+    name: 'Grades',
+    icon: 'grade',
+    link: '/grades'
+  },
+  {
+    name: 'Announcements',
+    icon: 'announcement',
+    link: '/announcement'
+  },
+  {
+    name: 'Finance',
+    icon: 'account_balance',
+    link: '/finances'
+  },
+  {
+    name: 'Files',
+    icon: 'cloud_download',
+    link: '/files'
+  },
+  {
+    name: 'Account',
+    icon: 'account_circle',
+    link: '/account'
+  }
+] as NavigationItem[]
+
+const adminNavigation = [
+  {
+    name: 'Dashboard',
+    icon: 'dashboard',
+    link: '/dashboard'
+  },
+  {
+    name: 'Schedule',
+    icon: 'today',
+    link: '/schedule'
+  },
+  {
+    name: 'Grades',
+    icon: 'grade',
+    link: '/grades'
+  },
+  {
+    name: 'Users',
+    icon: 'people',
+    link: '/users'
+  },
+  {
+    name: 'Announcements',
+    icon: 'announcement',
+    link: '/announcement'
+  },
+  {
+    name: 'Finance',
+    icon: 'account_balance',
+    link: '/finances'
+  },
+  {
+    name: 'Files',
+    icon: 'cloud_download',
+    link: '/files'
+  },
+  {
+    name: 'Account',
+    icon: 'account_circle',
+    link: '/account'
+  }
+] as NavigationItem[]
+
 export const useUserStore = defineStore('user', () => {
   const user = ref<User | null>(null)
 
@@ -66,8 +153,8 @@ export const useUserStore = defineStore('user', () => {
       }
     })
 
-    if (response.status !== 200) {
-      throw new Error('Failed to authenticate.')
+    if (response.data.message === 'Unauthorized') {
+      return false
     }
     await fetchUser()
     return true
@@ -78,11 +165,22 @@ export const useUserStore = defineStore('user', () => {
     return await checkToken()
   }
 
+  const getNavigation = () => {
+    if (user.value?.role === 0) {
+      return studentNavigation
+    }
+
+    if (user.value?.role === 1) {
+      return adminNavigation
+    }
+  }
+
   return {
     user,
     fetchUser,
     signIn,
     logOut,
-    isLoggedIn
+    isLoggedIn,
+    getNavigation
   }
 })
