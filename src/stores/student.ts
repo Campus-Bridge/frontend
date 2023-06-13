@@ -16,6 +16,7 @@ interface Student {
 
 export const useStudentStore = defineStore('student', () => {
   const student = ref<Student | null>(null)
+
   const fetchStudent = async () => {
     const userStore = useUserStore()
     const response = await axios.get('http://localhost:3000/api/students/' + userStore.user?.id)
@@ -25,8 +26,19 @@ export const useStudentStore = defineStore('student', () => {
     student.value = response.data
   }
 
+  const students = ref<Student[]>([])
+  const fetchStudents = async () => {
+    const response = await axios.get('http://localhost:3000/api/students')
+    if (response.status !== 200) {
+      throw new Error('Failed to authenticate.')
+    }
+    students.value = response.data
+  }
+
   return {
     student,
-    fetchStudent
+    students,
+    fetchStudent,
+    fetchStudents
   }
 })
