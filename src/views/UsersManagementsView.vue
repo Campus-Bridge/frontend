@@ -37,24 +37,11 @@
             </q-table>
           </q-card-section>
         </q-card>
-        <q-card class="my-card users-settings" v-if="selectedUser">
-          <q-card-section>
-            <div class="text-h6">{{ selectedUser.first_name }} {{ selectedUser.last_name }}</div>
-            <div class="text-subtitle2">Index: {{ selectedUser.index }}</div>
-          </q-card-section>
-          <q-card-section> tutaj dane </q-card-section>
-          <q-separator />
-          <q-card-actions class="buttons">
-            <q-btn flat icon="save" label="Save" color="light-green-14" />
-            <q-btn
-              flat
-              icon="close"
-              label="Cancel"
-              color="light-green-14"
-              @click="deselectUser()"
-            />
-          </q-card-actions>
-        </q-card>
+        <StudentEditCard
+          v-if="selectedUser"
+          :selectedUser="selectedUser"
+          @deselectUser="deselectUser"
+        />
       </div>
     </main>
   </div>
@@ -66,6 +53,7 @@ import TopBar from '@/components/dashboard/TopBar.vue'
 
 import { storeToRefs } from 'pinia'
 import { useStudentStore } from '@/stores/student'
+import StudentEditCard from '@/components/usermanagements/StudentEditCard.vue'
 const studentStore = useStudentStore()
 const { students } = storeToRefs(studentStore)
 
@@ -163,15 +151,6 @@ main {
 
   &.users-list {
     flex-basis: clamp(70%, 100%, 100%);
-  }
-  &.users-settings {
-    flex-basis: 30%;
-    display: grid;
-    grid-template-rows: 1fr 10fr auto 1fr;
-    .buttons {
-      display: flex;
-      justify-content: space-evenly;
-    }
   }
 }
 

@@ -7,15 +7,40 @@ interface Student {
   id: number
   first_name: string
   last_name: string
-  index: string
   birthdate: string
   address: string
   phone: string
+  index: string
   field_of_study: string
+  email: string
+  middle_name: string
+  nationality: string
+  citizenship: string
+  personal_id_number: string
+  mother: string
+  father: string
+  gender: boolean
 }
 
 export const useStudentStore = defineStore('student', () => {
-  const student = ref<Student | null>(null)
+  const student = ref<Student>({
+    id: 0,
+    first_name: '',
+    last_name: '',
+    index: '',
+    birthdate: '',
+    address: '',
+    phone: '',
+    field_of_study: '',
+    email: '',
+    middle_name: '',
+    nationality: '',
+    citizenship: '',
+    personal_id_number: '',
+    mother: '',
+    father: '',
+    gender: false
+  })
 
   const fetchStudent = async () => {
     const userStore = useUserStore()
@@ -24,6 +49,7 @@ export const useStudentStore = defineStore('student', () => {
       throw new Error('Failed to authenticate.')
     }
     student.value = response.data
+    student.value.email = userStore.user?.email as string
   }
 
   const students = ref<Student[]>([])
@@ -35,10 +61,18 @@ export const useStudentStore = defineStore('student', () => {
     students.value = response.data
   }
 
+  const updateStudent = async (student: Student) => {
+    const response = await axios.put('http://localhost:3000/api/students/' + student.id, student)
+    if (response.status !== 200) {
+      throw new Error('Failed to authenticate.')
+    }
+  }
+
   return {
     student,
     students,
     fetchStudent,
-    fetchStudents
+    fetchStudents,
+    updateStudent
   }
 })
