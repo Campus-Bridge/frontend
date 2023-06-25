@@ -11,7 +11,7 @@
         <q-btn
           outline
           color="light-green-14"
-          icon="check"
+          icon="person_add"
           label="New User"
           @click="newUserDialog = true"
         />
@@ -30,7 +30,7 @@
                   @click="selectUser(props.row)"
                 >
                   <q-td key="index" :props="props">
-                    {{ props.row.index }}
+                    {{ props.row.index_number }}
                   </q-td>
                   <q-td key="first_name" :props="props">
                     {{ props.row.first_name }}
@@ -49,7 +49,7 @@
             </q-table>
           </q-card-section>
         </q-card>
-        <EditCard v-if="selectedUser" :selectedUser="selectedUser" @deselectUser="deselectUser" />
+        <EditCard v-if="selectedStudent" />
       </div>
     </main>
   </div>
@@ -64,11 +64,10 @@ import { useStudentStore } from '@/stores/student'
 import EditCard from '@/components/usermanagements/EditCard.vue'
 import NewUserCard from '@/components/usermanagements/NewUserCard.vue'
 const studentStore = useStudentStore()
-const { students } = storeToRefs(studentStore)
+const { students, selectedStudent } = storeToRefs(studentStore)
 
 const tab = ref('students')
 
-const selectedUser = ref(0) as any
 const newUserDialog = ref(false)
 
 const columns = [
@@ -114,16 +113,15 @@ const columns = [
   }
 ] as any[]
 
-function selectUser(id: number) {
-  selectedUser.value = id
-}
-
-function deselectUser() {
-  selectedUser.value = 0
+function selectUser(user: any) {
+  if (selectedStudent.value.id) {
+    return
+  }
+  selectedStudent.value = user
 }
 
 function userIsSelected(id: number) {
-  if (id === selectedUser.value.id) {
+  if (id === selectedStudent.value.id) {
     return 'active'
   }
 }

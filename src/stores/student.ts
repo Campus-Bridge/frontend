@@ -3,14 +3,14 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useUserStore } from '@/stores/user'
 
-interface Student {
+export interface Student {
   id: number
   first_name: string
   last_name: string
   birthdate: string
   address: string
   phone: string
-  index: string
+  index_number: string
   field_of_study: string
   email: string
   middle_name: string
@@ -19,7 +19,7 @@ interface Student {
   personal_id_number: string
   mother: string
   father: string
-  gender: number
+  gender: string
   marital_status: string
   tax_identification_number: string
   series_and_number_of_identity_card: string
@@ -51,7 +51,7 @@ export const useStudentStore = defineStore('student', () => {
     birthdate: {} as VNodeRef,
     address: {} as VNodeRef,
     phone: {} as VNodeRef,
-    index: {} as VNodeRef,
+    index_number: {} as VNodeRef,
     field_of_study: {} as VNodeRef,
     middle_name: {} as VNodeRef,
     nationality: {} as VNodeRef,
@@ -81,13 +81,14 @@ export const useStudentStore = defineStore('student', () => {
     individual_course: {} as VNodeRef,
     date_and_number_of_contract: {} as VNodeRef
   })
+
   const newStudentRule = ref({
     first_name: [(v: string) => !!v || 'First name is required'],
     last_name: [(v: string) => !!v || 'Last name is required'],
     birthdate: [(v: string) => !!v || 'Birthdate is required'],
     address: [(v: string) => !!v || 'Address is required'],
     phone: [(v: string) => !!v || 'Phone is required'],
-    index: [(v: string) => !!v || 'Index is required'],
+    index_number: [(v: string) => !!v || 'Index is required'],
     field_of_study: [(v: string) => !!v || 'Field of study is required'],
     middle_name: [(v: string) => !!v || 'Middle name is required'],
     nationality: [(v: string) => !!v || 'Nationality is required'],
@@ -95,7 +96,7 @@ export const useStudentStore = defineStore('student', () => {
     personal_id_number: [(v: string) => !!v || 'Personal ID number is required'],
     mother: [(v: string) => !!v || 'Mother is required'],
     father: [(v: string) => !!v || 'Father is required'],
-    gender: [(v: number) => v === 0 || v === 1 || 'Gender is required'],
+    gender: [(v: string) => v === '0' || v === '1' || 'Gender is required'],
     marital_status: [(v: string) => !!v || 'Marital status is required'],
     tax_identification_number: [(v: string) => !!v || 'Tax identification number is required'],
     series_and_number_of_identity_card: [
@@ -119,6 +120,8 @@ export const useStudentStore = defineStore('student', () => {
     individual_course: [(v: boolean) => !!v || 'Individual course is required'],
     date_and_number_of_contract: [(v: string) => !!v || 'Date and number of contract is required']
   })
+
+  const selectedStudent = ref<Student>({} as Student)
 
   const fetchStudent = async () => {
     const userStore = useUserStore()
@@ -156,6 +159,10 @@ export const useStudentStore = defineStore('student', () => {
     fetchStudents()
   }
 
+  const resetNewStudent = () => {
+    newStudent.value = {} as Student
+  }
+
   return {
     student,
     students,
@@ -165,6 +172,8 @@ export const useStudentStore = defineStore('student', () => {
     fetchStudent,
     fetchStudents,
     createStudent,
-    updateStudent
+    updateStudent,
+    resetNewStudent,
+    selectedStudent
   }
 })

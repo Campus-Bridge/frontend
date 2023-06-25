@@ -41,6 +41,7 @@
           icon="cancel"
           label="Cancel"
           class="q-ml-sm"
+          @click="closePop()"
           v-close-popup
         />
       </q-stepper-navigation>
@@ -54,8 +55,8 @@ import UserInput from './newusercard/UserInput.vue'
 import StudentPersonalInput from './newusercard/StudentPersonalInput.vue'
 import { useUserStore } from '@/stores/user'
 import { useStudentStore } from '@/stores/student'
-const { newUser, newUserRef, createUser } = useUserStore()
-const { newStudentRef, createStudent } = useStudentStore()
+const { newUser, newUserRef, createUser, resetNewUser } = useUserStore()
+const { newStudentRef, createStudent, resetNewStudent } = useStudentStore()
 
 const tab = ref(1)
 const emit = defineEmits(['closePop'])
@@ -72,6 +73,11 @@ const next = async () => {
     await createStudent(id)
     emit('closePop')
   }
+}
+
+const closePop = () => {
+  resetNewUser()
+  resetNewStudent()
 }
 
 const Valid = () => {
@@ -125,7 +131,7 @@ const Valid = () => {
     )
   } else if (tab.value === 3) {
     newStudentRef.field_of_study.validate()
-    newStudentRef.index.validate()
+    newStudentRef.index_number.validate()
     newStudentRef.course_of_study.validate()
     newStudentRef.student_status.validate()
     newStudentRef.year_term.validate()
@@ -141,7 +147,7 @@ const Valid = () => {
 
     return (
       newStudentRef.field_of_study.hasError ||
-      newStudentRef.index.hasError ||
+      newStudentRef.index_number.hasError ||
       newStudentRef.course_of_study.hasError ||
       newStudentRef.student_status.hasError ||
       newStudentRef.year_term.hasError ||

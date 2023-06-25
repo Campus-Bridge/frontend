@@ -3,11 +3,11 @@
     <q-input
       style="width: calc(50% - 16px)"
       color="light-green-14"
-      v-model="newStudent.index"
+      v-model="newStudent.index_number"
       ref="indexRef"
       type="text"
       label="Index"
-      :rules="newStudentRule.index"
+      :rules="newStudentRule.index_number"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -187,7 +187,7 @@ const { newStudent, newStudentRef, newStudentRule } = useStudentStore()
 
 const indexRef = ref()
 watch(indexRef, () => {
-  newStudentRef.index = indexRef.value
+  newStudentRef.index_number = indexRef.value
 })
 
 const fieldOfStudyRef = ref()

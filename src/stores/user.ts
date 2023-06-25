@@ -4,7 +4,7 @@ import router from '@/router'
 import axios from 'axios'
 import type { VNodeRef } from 'vue'
 
-interface User {
+export interface User {
   id: number
   email: string
   role: number
@@ -140,6 +140,10 @@ export const useUserStore = defineStore('user', () => {
     return response.data
   }
 
+  const resetNewUser = () => {
+    newUser.value = {} as User
+  }
+
   const signIn = async (email: string, password: string, rememberMe: boolean) => {
     const response = await axios.get('/user/login', {
       params: {
@@ -212,6 +216,7 @@ export const useUserStore = defineStore('user', () => {
     signIn,
     logOut,
     isLoggedIn,
-    getNavigation
+    getNavigation,
+    resetNewUser
   }
 })
