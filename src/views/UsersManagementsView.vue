@@ -3,11 +3,23 @@
     <NavigationBar />
     <main>
       <TopBar :firstName="''" :lastName="''" />
-      <q-tabs v-model="tab" align="left" class="text-light-green-14 q-mb-md">
-        <q-tab name="students" label="Students" />
-        <q-tab name="lecturer" label="Lecturer" />
-      </q-tabs>
+      <div class="flex justify-between items-center">
+        <q-tabs v-model="tab" align="left" class="text-light-green-14 q-mb-md">
+          <q-tab name="students" label="Students" />
+          <q-tab name="lecturer" label="Lecturer" />
+        </q-tabs>
+        <q-btn
+          outline
+          color="light-green-14"
+          icon="check"
+          label="New User"
+          @click="newUserDialog = true"
+        />
+      </div>
       <div class="cards">
+        <q-dialog v-model="newUserDialog" persistent>
+          <NewUserCard @closePop="newUserDialog = false" />
+        </q-dialog>
         <q-card class="my-card users-list">
           <q-card-section>
             <q-table flat :rows="showUser" :columns="columns" row-key="id" style="height: 100%">
@@ -37,11 +49,7 @@
             </q-table>
           </q-card-section>
         </q-card>
-        <StudentEditCard
-          v-if="selectedUser"
-          :selectedUser="selectedUser"
-          @deselectUser="deselectUser"
-        />
+        <EditCard v-if="selectedUser" :selectedUser="selectedUser" @deselectUser="deselectUser" />
       </div>
     </main>
   </div>
@@ -53,13 +61,15 @@ import TopBar from '@/components/dashboard/TopBar.vue'
 
 import { storeToRefs } from 'pinia'
 import { useStudentStore } from '@/stores/student'
-import StudentEditCard from '@/components/usermanagements/StudentEditCard.vue'
+import EditCard from '@/components/usermanagements/EditCard.vue'
+import NewUserCard from '@/components/usermanagements/NewUserCard.vue'
 const studentStore = useStudentStore()
 const { students } = storeToRefs(studentStore)
 
 const tab = ref('students')
 
 const selectedUser = ref(0) as any
+const newUserDialog = ref(false)
 
 const columns = [
   {
