@@ -2,9 +2,8 @@ import { defineStore } from 'pinia'
 import { useCookies } from 'vue3-cookies'
 import router from '@/router'
 import axios from 'axios'
-import type { VNodeRef } from 'vue'
 
-export interface User {
+interface User {
   id: number
   email: string
   role: number
@@ -101,24 +100,9 @@ const adminNavigation = [
 export const useUserStore = defineStore('user', () => {
   const user = ref<User | null>(null)
 
-  const newUser = ref<User>({} as User)
-  const newUserRef = ref({
-    email: {} as VNodeRef,
-    role: {} as VNodeRef
-  })
-  const newUserRule = ref({
-    email: [
-      (v: string) => !!v || 'Email is required',
-      (v: string) => /.+@.+\..+/.test(v) || 'Email must be valid'
-    ],
-    role: [
-      (v: number) => v === 0 || v === 1 || v === 2 || 'Role must be Student, Admin or Lecturer'
-    ]
-  })
-
   const fetchUser = async () => {
     const { cookies } = useCookies()
-    const response = await axios.get('/user', {
+    const response = await axios.get('/user/getUser', {
       headers: {
         Authorization: cookies.get('token')
       }
@@ -127,21 +111,6 @@ export const useUserStore = defineStore('user', () => {
       throw new Error('Failed to authenticate.')
     }
     user.value = response.data
-  }
-
-  const createUser = async () => {
-    const response = await axios.post('/user', {
-      email: newUser.value.email,
-      username: newUser.value.username,
-      role: newUser.value.role
-    })
-    console.log(response.data)
-
-    return response.data
-  }
-
-  const resetNewUser = () => {
-    newUser.value = {} as User
   }
 
   const signIn = async (email: string, password: string, rememberMe: boolean) => {
@@ -208,15 +177,10 @@ export const useUserStore = defineStore('user', () => {
 
   return {
     user,
-    newUser,
-    newUserRef,
-    newUserRule,
     fetchUser,
-    createUser,
     signIn,
     logOut,
     isLoggedIn,
-    getNavigation,
-    resetNewUser
+    getNavigation
   }
 })
