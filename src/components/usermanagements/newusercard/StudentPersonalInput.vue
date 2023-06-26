@@ -132,8 +132,8 @@
       label="gender"
       :rules="newStudentRule.gender"
       :options="[
-        { label: 'Male', value: 0 },
-        { label: 'Female', value: 1 }
+        { label: 'Male', value: '0' },
+        { label: 'Female', value: '1' }
       ]"
       emit-value
       map-options
