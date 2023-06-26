@@ -25,4 +25,14 @@ body.body--light {
 
   color: $grey-9;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $light-green-14;
+  border-radius: 10px;
+}
 </style>
