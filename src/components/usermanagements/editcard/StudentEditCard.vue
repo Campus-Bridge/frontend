@@ -381,11 +381,11 @@
         :options="[
           {
             label: 'Yes',
-            value: '1'
+            value: true
           },
           {
             label: 'No',
-            value: '0'
+            value: false
           }
         ]"
         emit-value
