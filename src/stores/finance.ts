@@ -19,10 +19,8 @@ export const useFinanceStore = defineStore('finance', () => {
   const nearFinanceStyle = ref<string | null>(null)
 
   const getFinance = async () => {
-    const studentStore = await useStudentStore()
-    const response = await axios.get(
-      'http://localhost:3000/api/finances/' + studentStore.student?.id
-    )
+    const userStore = useStudentStore()
+    const response = await axios.get('http://localhost:3000/api/finances/' + userStore.student?.id)
     finances.value = response.data
   }
 
