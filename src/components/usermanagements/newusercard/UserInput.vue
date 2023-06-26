@@ -8,6 +8,7 @@
       label="Email"
       color="light-green-14"
       :rules="newUserRule.email"
+      maxlength="100"
     />
     <q-select
       v-model="newUser.role"

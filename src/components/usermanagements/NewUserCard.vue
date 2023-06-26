@@ -84,7 +84,7 @@ const Valid = () => {
   if (tab.value === 1) {
     newUserRef.email.validate()
     newUserRef.role.validate()
-    return newUserRef.email.hasError || newUserRef.role.value
+    return newUserRef.email.hasError || newUserRef.role.hasError
   } else if (tab.value === 2) {
     newStudentRef.first_name.validate()
     newStudentRef.last_name.validate()

@@ -8,6 +8,8 @@
       type="text"
       label="Index"
       :rules="newStudentRule.index_number"
+      maxlength="5"
+      mask="#####"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -17,6 +19,7 @@
       type="text"
       label="field_of_study"
       :rules="newStudentRule.field_of_study"
+      maxlength="100"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -26,6 +29,7 @@
       type="text"
       label="course_of_study"
       :rules="newStudentRule.course_of_study"
+      maxlength="100"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -35,6 +39,7 @@
       type="text"
       label="student_status"
       :rules="newStudentRule.student_status"
+      maxlength="100"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -44,6 +49,7 @@
       type="text"
       label="year_term"
       :rules="newStudentRule.year_term"
+      maxlength="3"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -53,6 +59,7 @@
       type="text"
       label="type_of_study"
       :rules="newStudentRule.type_of_study"
+      maxlength="20"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -62,6 +69,7 @@
       type="text"
       label="department"
       :rules="newStudentRule.department"
+      maxlength="50"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -71,6 +79,7 @@
       type="text"
       label="speciality"
       :rules="newStudentRule.speciality"
+      maxlength="100"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -80,6 +89,7 @@
       type="text"
       label="specialization"
       :rules="newStudentRule.specialization"
+      maxlength="100"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -89,6 +99,7 @@
       type="text"
       label="title_obtained"
       :rules="newStudentRule.title_obtained"
+      maxlength="100"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -159,11 +170,11 @@
       :options="[
         {
           label: 'Yes',
-          value: 1
+          value: '1'
         },
         {
           label: 'No',
-          value: 0
+          value: '0'
         }
       ]"
       emit-value
@@ -177,6 +188,7 @@
       type="text"
       label="date_and_number_of_contract"
       :rules="newStudentRule.date_and_number_of_contract"
+      maxlength="20"
     />
   </div>
 </template>

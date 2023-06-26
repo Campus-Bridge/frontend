@@ -38,7 +38,7 @@ export interface Student {
   title_obtained: string
   start_date_of_studies: string
   expected_date_of_graduation: string
-  individual_course: boolean
+  individual_course: string
   date_and_number_of_contract: string
 }
 
@@ -117,7 +117,7 @@ export const useStudentStore = defineStore('student', () => {
     title_obtained: [(v: string) => !!v || 'Title obtained is required'],
     start_date_of_studies: [(v: string) => !!v || 'Start date of studies is required'],
     expected_date_of_graduation: [(v: string) => !!v || 'Expected date of graduation is required'],
-    individual_course: [(v: boolean) => !!v || 'Individual course is required'],
+    individual_course: [(v: string) => !!v || 'Individual course is required'],
     date_and_number_of_contract: [(v: string) => !!v || 'Date and number of contract is required']
   })
 

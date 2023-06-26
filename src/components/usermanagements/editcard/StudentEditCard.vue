@@ -21,6 +21,7 @@
         label="first_name"
         color="light-green-14"
         :rules="newStudentRule.first_name"
+        maxlength="50"
       />
       <q-input
         color="light-green-14"
@@ -29,15 +30,16 @@
         type="text"
         label="last_name"
         :rules="newStudentRule.last_name"
+        maxlength="50"
       />
       <q-input
         color="light-green-14"
         v-model="selectedStudent.birthdate"
         ref="birthdateRef"
-        mask="date"
         type="text"
         label="birthdate"
         :rules="newStudentRule.birthdate"
+        mask="####/##/##"
       >
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
@@ -68,6 +70,7 @@
         type="text"
         label="address"
         :rules="newStudentRule.address"
+        maxlength="100"
       />
       <q-input
         color="light-green-14"
@@ -76,6 +79,8 @@
         type="text"
         label="phone"
         :rules="newStudentRule.phone"
+        mask="+##-###-###-###"
+        maxlength="15"
       />
       <q-input
         color="light-green-14"
@@ -84,6 +89,7 @@
         type="text"
         label="middle_name"
         :rules="newStudentRule.middle_name"
+        maxlength="50"
       />
       <q-select
         color="light-green-14"
@@ -110,6 +116,8 @@
         type="text"
         label="personal_id_number"
         :rules="newStudentRule.personal_id_number"
+        maxlength="11"
+        mask="###########"
       />
       <q-input
         color="light-green-14"
@@ -118,6 +126,7 @@
         type="text"
         label="mother"
         :rules="newStudentRule.mother"
+        maxlength="50"
       />
       <q-input
         color="light-green-14"
@@ -126,6 +135,7 @@
         type="text"
         label="father"
         :rules="newStudentRule.father"
+        maxlength="50"
       />
       <q-select
         v-model="selectedStudent.gender"
@@ -147,6 +157,7 @@
         type="text"
         label="marital_status"
         :rules="newStudentRule.marital_status"
+        maxlength="7"
       />
       <q-input
         color="light-green-14"
@@ -155,6 +166,7 @@
         type="text"
         label="tax_identification_number"
         :rules="newStudentRule.tax_identification_number"
+        maxlength="10"
       />
       <q-input
         color="light-green-14"
@@ -163,6 +175,7 @@
         type="text"
         label="series_and_number_of_identity_card"
         :rules="newStudentRule.series_and_number_of_identity_card"
+        maxlength="9"
       />
       <q-input
         color="light-green-14"
@@ -171,6 +184,7 @@
         type="text"
         label="id_card_issuing_authority"
         :rules="newStudentRule.id_card_issuing_authority"
+        maxlength="50"
       />
       <q-input
         color="light-green-14"
@@ -179,6 +193,7 @@
         type="text"
         label="passport_number"
         :rules="newStudentRule.passport_number"
+        maxlength="9"
       />
       <q-input
         color="light-green-14"
@@ -187,6 +202,7 @@
         type="text"
         label="series_and_number_of_military_booklet"
         :rules="newStudentRule.series_and_number_of_military_booklet"
+        maxlength="8"
       />
       <q-input
         color="light-green-14"
@@ -195,6 +211,7 @@
         type="text"
         label="mothers_maiden_name"
         :rules="newStudentRule.mothers_maiden_name"
+        maxlength="50"
       />
       <q-input
         color="light-green-14"
@@ -203,6 +220,7 @@
         type="text"
         label="maiden_name"
         :rules="newStudentRule.maiden_name"
+        maxlength="50"
       />
     </q-card-section>
     <q-card-section v-if="tab === 'studies'" style="overflow-y: scroll; overflow-x: hidden">
@@ -213,6 +231,8 @@
         type="text"
         label="Index"
         :rules="newStudentRule.index_number"
+        maxlength="5"
+        mask="#####"
       />
       <q-input
         color="light-green-14"
@@ -221,6 +241,7 @@
         type="text"
         label="field_of_study"
         :rules="newStudentRule.field_of_study"
+        maxlength="100"
       />
       <q-input
         color="light-green-14"
@@ -229,6 +250,7 @@
         type="text"
         label="course_of_study"
         :rules="newStudentRule.course_of_study"
+        maxlength="100"
       />
       <q-input
         color="light-green-14"
@@ -237,6 +259,7 @@
         type="text"
         label="student_status"
         :rules="newStudentRule.student_status"
+        maxlength="100"
       />
       <q-input
         color="light-green-14"
@@ -245,6 +268,7 @@
         type="text"
         label="year_term"
         :rules="newStudentRule.year_term"
+        maxlength="3"
       />
       <q-input
         color="light-green-14"
@@ -253,6 +277,7 @@
         type="text"
         label="type_of_study"
         :rules="newStudentRule.type_of_study"
+        maxlength="20"
       />
       <q-input
         color="light-green-14"
@@ -261,6 +286,7 @@
         type="text"
         label="department"
         :rules="newStudentRule.department"
+        maxlength="50"
       />
       <q-input
         color="light-green-14"
@@ -269,6 +295,7 @@
         type="text"
         label="speciality"
         :rules="newStudentRule.speciality"
+        maxlength="100"
       />
       <q-input
         color="light-green-14"
@@ -277,6 +304,7 @@
         type="text"
         label="specialization"
         :rules="newStudentRule.specialization"
+        maxlength="100"
       />
       <q-input
         color="light-green-14"
@@ -285,6 +313,7 @@
         type="text"
         label="title_obtained"
         :rules="newStudentRule.title_obtained"
+        maxlength="100"
       />
       <q-input
         color="light-green-14"
@@ -369,6 +398,7 @@
         type="text"
         label="date_and_number_of_contract"
         :rules="newStudentRule.date_and_number_of_contract"
+        maxlength="20"
       />
     </q-card-section>
     <q-separator />

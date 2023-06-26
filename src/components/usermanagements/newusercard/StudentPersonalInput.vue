@@ -8,6 +8,7 @@
       label="first_name"
       color="light-green-14"
       :rules="newStudentRule.first_name"
+      maxlength="50"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -17,13 +18,14 @@
       type="text"
       label="last_name"
       :rules="newStudentRule.last_name"
+      maxlength="50"
     />
     <q-input
       style="width: calc(50% - 16px)"
       color="light-green-14"
       v-model="newStudent.birthdate"
       ref="birthdateRef"
-      mask="date"
+      mask="####/##/##"
       type="text"
       label="birthdate"
       :rules="newStudentRule.birthdate"
@@ -58,15 +60,18 @@
       type="text"
       label="address"
       :rules="newStudentRule.address"
+      maxlength="100"
     />
     <q-input
       style="width: calc(50% - 16px)"
       color="light-green-14"
       v-model="newStudent.phone"
       ref="phoneRef"
-      type="text"
+      type="tel"
       label="phone"
       :rules="newStudentRule.phone"
+      mask="+##-###-###-###"
+      maxlength="15"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -76,6 +81,7 @@
       type="text"
       label="middle_name"
       :rules="newStudentRule.middle_name"
+      maxlength="50"
     />
     <q-select
       style="width: calc(50% - 16px)"
@@ -105,6 +111,8 @@
       type="text"
       label="personal_id_number"
       :rules="newStudentRule.personal_id_number"
+      maxlength="11"
+      mask="###########"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -114,6 +122,7 @@
       type="text"
       label="mother"
       :rules="newStudentRule.mother"
+      maxlength="50"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -123,6 +132,7 @@
       type="text"
       label="father"
       :rules="newStudentRule.father"
+      maxlength="50"
     />
     <q-select
       v-model="newStudent.gender"
@@ -146,6 +156,7 @@
       type="text"
       label="marital_status"
       :rules="newStudentRule.marital_status"
+      maxlength="7"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -155,6 +166,7 @@
       type="text"
       label="tax_identification_number"
       :rules="newStudentRule.tax_identification_number"
+      maxlength="10"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -164,6 +176,7 @@
       type="text"
       label="series_and_number_of_identity_card"
       :rules="newStudentRule.series_and_number_of_identity_card"
+      maxlength="9"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -173,6 +186,7 @@
       type="text"
       label="id_card_issuing_authority"
       :rules="newStudentRule.id_card_issuing_authority"
+      maxlength="50"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -182,6 +196,7 @@
       type="text"
       label="passport_number"
       :rules="newStudentRule.passport_number"
+      maxlength="9"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -191,6 +206,7 @@
       type="text"
       label="series_and_number_of_military_booklet"
       :rules="newStudentRule.series_and_number_of_military_booklet"
+      maxlength="8"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -200,6 +216,7 @@
       type="text"
       label="mothers_maiden_name"
       :rules="newStudentRule.mothers_maiden_name"
+      maxlength="50"
     />
     <q-input
       style="width: calc(50% - 16px)"
@@ -209,6 +226,7 @@
       type="text"
       label="maiden_name"
       :rules="newStudentRule.maiden_name"
+      maxlength="50"
     />
   </div>
 </template>
