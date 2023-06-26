@@ -1,16 +1,16 @@
-import { ref, type VNodeRef } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useUserStore } from '@/stores/user'
 
-export interface Student {
+interface Student {
   id: number
   first_name: string
   last_name: string
+  index: string
   birthdate: string
   address: string
   phone: string
-  index_number: string
   field_of_study: string
   email: string
   middle_name: string
@@ -125,55 +125,15 @@ export const useStudentStore = defineStore('student', () => {
 
   const fetchStudent = async () => {
     const userStore = useUserStore()
-    const response = await axios.get('/students/' + userStore.user?.id)
+    const response = await axios.get('http://localhost:3000/api/students/' + userStore.user?.id)
     if (response.status !== 200) {
       throw new Error('Failed to authenticate.')
     }
     student.value = response.data
-    student.value.email = userStore.user?.email as string
-  }
-
-  const students = ref<Student[]>([])
-  const fetchStudents = async () => {
-    const response = await axios.get('/students')
-    if (response.status !== 200) {
-      throw new Error('Failed to authenticate.')
-    }
-    students.value = response.data
-  }
-
-  const updateStudent = async (student: Student) => {
-    const response = await axios.put('/students/' + student.id, student)
-    if (response.status !== 200) {
-      throw new Error('Failed to authenticate.')
-    }
-  }
-
-  const createStudent = async (id: number) => {
-    const response = await axios.post('/students', {
-      userId: id,
-      data: newStudent.value
-    })
-
-    newStudent.value = {} as Student
-    fetchStudents()
-  }
-
-  const resetNewStudent = () => {
-    newStudent.value = {} as Student
   }
 
   return {
     student,
-    students,
-    newStudent,
-    newStudentRef,
-    newStudentRule,
-    fetchStudent,
-    fetchStudents,
-    createStudent,
-    updateStudent,
-    resetNewStudent,
-    selectedStudent
+    fetchStudent
   }
 })

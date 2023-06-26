@@ -91,14 +91,13 @@ const { nearFinance, nearFinanceStyle } = storeToRefs(financeStore)
 
 onMounted(async () => {
   if (userStore.user?.role === 0) {
-    await studentStore.fetchStudent()
     await financeStore.getFinance()
     await financeStore.getNearFinance()
   }
 })
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .cards {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
