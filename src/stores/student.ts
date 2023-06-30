@@ -2,6 +2,7 @@ import { ref, type VNodeRef } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useUserStore } from '@/stores/user'
+import { Notify } from 'quasar'
 
 export interface Student {
   id: number
@@ -124,39 +125,70 @@ export const useStudentStore = defineStore('student', () => {
   const selectedStudent = ref<Student>({} as Student)
 
   const fetchStudent = async () => {
-    const userStore = useUserStore()
-    const response = await axios.get('/students/' + userStore.user?.id)
-    if (response.status !== 200) {
-      throw new Error('Failed to authenticate.')
+    try {
+      const userStore = useUserStore()
+      const response = await axios.get('/students/' + userStore.user?.id)
+      if (response.status !== 200) {
+        throw new Error('Failed to authenticate.')
+      }
+      student.value = response.data
+      student.value.email = userStore.user?.email as string
+    } catch (error: any) {
+      Notify.create({
+        color: 'negative',
+        position: 'top-right',
+        message: error.response.data.message
+      })
     }
-    student.value = response.data
-    student.value.email = userStore.user?.email as string
   }
 
   const students = ref<Student[]>([])
   const fetchStudents = async () => {
-    const response = await axios.get('/students')
-    if (response.status !== 200) {
-      throw new Error('Failed to authenticate.')
+    try {
+      const response = await axios.get('/students')
+      students.value = response.data
+    } catch (error: any) {
+      Notify.create({
+        color: 'negative',
+        position: 'top-right',
+        message: error.response.data.message
+      })
     }
-    students.value = response.data
   }
 
   const updateStudent = async (student: Student) => {
-    const response = await axios.put('/students/' + student.id, student)
-    if (response.status !== 200) {
-      throw new Error('Failed to authenticate.')
+    try {
+      const response = await axios.put('/students/' + student.id, student)
+      Notify.create({
+        color: 'positive',
+        position: 'top-right',
+        message: response.data.message
+      })
+    } catch (error: any) {
+      Notify.create({
+        color: 'negative',
+        position: 'top-right',
+        message: error.response.data.message
+      })
     }
   }
 
   const createStudent = async (id: number) => {
-    const response = await axios.post('/students', {
-      userId: id,
-      data: newStudent.value
-    })
+    try {
+      const response = await axios.post('/students', {
+        userId: id,
+        data: newStudent.value
+      })
 
-    newStudent.value = {} as Student
-    fetchStudents()
+      newStudent.value = {} as Student
+      fetchStudents()
+    } catch (error: any) {
+      Notify.create({
+        color: 'negative',
+        position: 'top-right',
+        message: error.response.data.message
+      })
+    }
   }
 
   const resetNewStudent = () => {

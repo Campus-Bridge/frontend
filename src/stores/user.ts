@@ -3,6 +3,7 @@ import { useCookies } from 'vue3-cookies'
 import router from '@/router'
 import axios from 'axios'
 import type { VNodeRef } from 'vue'
+import { Notify } from 'quasar'
 
 export interface User {
   id: number
@@ -117,27 +118,49 @@ export const useUserStore = defineStore('user', () => {
   })
 
   const fetchUser = async () => {
-    const { cookies } = useCookies()
-    const response = await axios.get('/user', {
-      headers: {
-        Authorization: cookies.get('token')
-      }
-    })
-    if (response.status !== 200) {
-      throw new Error('Failed to authenticate.')
+    try {
+      const { cookies } = useCookies()
+      const response = await axios.get('/user', {
+        headers: {
+          Authorization: cookies.get('token')
+        }
+      })
+      user.value = response.data
+    } catch (error: any) {
+      Notify.create({
+        color: 'negative',
+        position: 'top-right',
+        message: error.response.data.message
+      })
     }
-    user.value = response.data
   }
 
   const createUser = async () => {
-    const response = await axios.post('/user', {
-      email: newUser.value.email,
-      username: newUser.value.username,
-      role: newUser.value.role
-    })
-    console.log(response.data)
+    try {
+      Notify.create({
+        color: 'info',
+        position: 'top-right',
+        message: 'Creating user...'
+      })
+      const response = await axios.post('/user', {
+        email: newUser.value.email,
+        username: newUser.value.username,
+        role: newUser.value.role
+      })
+      Notify.create({
+        color: 'positive',
+        position: 'top-right',
+        message: 'User created successfully.'
+      })
 
-    return response.data
+      return response.data
+    } catch (error: any) {
+      Notify.create({
+        color: 'negative',
+        position: 'top-right',
+        message: error.response.data.message
+      })
+    }
   }
 
   const resetNewUser = () => {
@@ -145,32 +168,49 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const signIn = async (email: string, password: string, rememberMe: boolean) => {
-    const response = await axios.get('/user/login', {
-      params: {
-        email: email,
-        password: password
+    try {
+      const response = await axios.get('/user/login', {
+        params: {
+          email: email,
+          password: password
+        }
+      })
+      if (response.status !== 200) {
+        throw new Error('Failed to authenticate.')
       }
-    })
-    if (response.status !== 200) {
-      throw new Error('Failed to authenticate.')
+      const { cookies } = useCookies()
+      const expires = rememberMe ? '30d' : '1h'
+      cookies.set('token', response.data, expires, '/', 'localhost', true, 'Strict')
+      await fetchUser()
+      router.push('/dashboard')
+    } catch (error: any) {
+      Notify.create({
+        color: 'negative',
+        position: 'top-right',
+        message: error.response.data.message
+      })
     }
-    const { cookies } = useCookies()
-    const expires = rememberMe ? '30d' : '1h'
-    cookies.set('token', response.data, expires, '/', 'localhost', true, 'Strict')
-    await fetchUser()
-    router.push('/dashboard')
   }
 
   const logOut = async () => {
-    const response = await axios.get('/user/logout')
-    const { cookies } = useCookies()
-    cookies.remove('token')
-    if (response.status !== 200) {
-      console.log('Error logging out')
-      return
+    try {
+      const response = await axios.get('/user/logout')
+      const { cookies } = useCookies()
+      cookies.remove('token')
+      user.value = null
+      router.push({ name: 'home' })
+      Notify.create({
+        color: 'positive',
+        position: 'top-right',
+        message: "You've been logged out."
+      })
+    } catch (error: any) {
+      Notify.create({
+        color: 'negative',
+        position: 'top-right',
+        message: error.response.data.message
+      })
     }
-    user.value = null
-    router.push({ name: 'home' })
   }
 
   const checkToken = async () => {
