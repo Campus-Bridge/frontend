@@ -67,10 +67,19 @@
       <q-input
         color="light-green-14"
         v-model="selectedLecturer.home_address"
-        ref="addressRef"
+        ref="homeAddressRef"
         type="text"
-        label="address"
+        label="home_address"
         :rules="newLecturerRules.home_address"
+        maxlength="100"
+      />
+      <q-input
+        color="light-green-14"
+        v-model="selectedLecturer.billing_address"
+        ref="billingAddressRef"
+        type="text"
+        label="billing_address"
+        :rules="newLecturerRules.billing_address"
         maxlength="100"
       />
       <q-input

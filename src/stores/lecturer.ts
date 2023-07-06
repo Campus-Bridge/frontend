@@ -57,16 +57,19 @@ export const useLecturerStore = defineStore('lecturer', () => {
   const newLecturerRules = ref({
     first_name: [
       { required: true, message: 'Imię jest wymagane', trigger: 'blur' },
-      { min: 3, message: 'Imię musi mieć minimum 3 znaki', trigger: 'blur' }
+      { min: 3, message: 'Imię musi mieć minimum 3 znaki', trigger: 'blur' },
+      { max: 50, message: 'Imię musi mieć maksimum 50 znaków', trigger: 'blur' }
     ],
     last_name: [
       { required: true, message: 'Nazwisko jest wymagane', trigger: 'blur' },
-      { min: 3, message: 'Nazwisko musi mieć minimum 3 znaki', trigger: 'blur' }
+      { min: 3, message: 'Nazwisko musi mieć minimum 3 znaki', trigger: 'blur' },
+      { max: 50, message: 'Nazwisko musi mieć maksimum 50 znaków', trigger: 'blur' }
     ],
     date_of_birth: [{ required: true, message: 'Data urodzenia jest wymagana', trigger: 'blur' }],
     phone: [
       { required: true, message: 'Numer telefonu jest wymagany', trigger: 'blur' },
-      { min: 9, message: 'Numer telefonu musi mieć minimum 9 znaków', trigger: 'blur' }
+      { min: 9, message: 'Numer telefonu musi mieć minimum 9 znaków', trigger: 'blur' },
+      { max: 12, message: 'Numer telefonu musi mieć maksimum 12 znaków', trigger: 'blur' }
     ],
     email: [
       { required: true, message: 'Email jest wymagany', trigger: 'blur' },
@@ -74,27 +77,33 @@ export const useLecturerStore = defineStore('lecturer', () => {
     ],
     home_address: [
       { required: true, message: 'Adres zamieszkania jest wymagany', trigger: 'blur' },
-      { min: 3, message: 'Adres zamieszkania musi mieć minimum 3 znaki', trigger: 'blur' }
+      { min: 3, message: 'Adres zamieszkania musi mieć minimum 3 znaki', trigger: 'blur' },
+      { max: 50, message: 'Adres zamieszkania musi mieć maksimum 50 znaków', trigger: 'blur' }
     ],
     billing_address: [
       { required: true, message: 'Adres korespondencyjny jest wymagany', trigger: 'blur' },
-      { min: 3, message: 'Adres korespondencyjny musi mieć minimum 3 znaki', trigger: 'blur' }
+      { min: 3, message: 'Adres korespondencyjny musi mieć minimum 3 znaki', trigger: 'blur' },
+      { max: 50, message: 'Adres korespondencyjny musi mieć maksimum 50 znaków', trigger: 'blur' }
     ],
     academic_title: [
       { required: true, message: 'Tytuł naukowy jest wymagany', trigger: 'blur' },
-      { min: 3, message: 'Tytuł naukowy musi mieć minimum 3 znaki', trigger: 'blur' }
+      { min: 3, message: 'Tytuł naukowy musi mieć minimum 3 znaki', trigger: 'blur' },
+      { max: 50, message: 'Tytuł naukowy musi mieć maksimum 50 znaków', trigger: 'blur' }
     ],
     subjects_taught: [
       { required: true, message: 'Przedmioty prowadzone są wymagane', trigger: 'blur' },
-      { min: 3, message: 'Przedmioty prowadzone muszą mieć minimum 3 znaki', trigger: 'blur' }
+      { min: 3, message: 'Przedmioty prowadzone muszą mieć minimum 3 znaki', trigger: 'blur' },
+      { max: 100, message: 'Przedmioty prowadzone muszą mieć maksimum 100 znaków', trigger: 'blur' }
     ],
     type_of_contract: [
       { required: true, message: 'Typ umowy jest wymagany', trigger: 'blur' },
-      { min: 3, message: 'Typ umowy musi mieć minimum 3 znaki', trigger: 'blur' }
+      { min: 3, message: 'Typ umowy musi mieć minimum 3 znaki', trigger: 'blur' },
+      { max: 50, message: 'Typ umowy musi mieć maksimum 50 znaków', trigger: 'blur' }
     ],
     bank_account_number: [
       { required: true, message: 'Numer konta bankowego jest wymagany', trigger: 'blur' },
-      { min: 26, message: 'Numer konta bankowego musi mieć minimum 26 znaków', trigger: 'blur' }
+      { min: 26, message: 'Numer konta bankowego musi mieć minimum 26 znaków', trigger: 'blur' },
+      { max: 26, message: 'Numer konta bankowego musi mieć maksimum 26 znaków', trigger: 'blur' }
     ],
     tax_identification_number: [
       { required: true, message: 'Numer identyfikacji podatkowej jest wymagany', trigger: 'blur' },
@@ -102,13 +111,23 @@ export const useLecturerStore = defineStore('lecturer', () => {
         min: 10,
         message: 'Numer identyfikacji podatkowej musi mieć minimum 10 znaków',
         trigger: 'blur'
+      },
+      {
+        max: 10,
+        message: 'Numer identyfikacji podatkowej musi mieć maksimum 10 znaków',
+        trigger: 'blur'
       }
     ],
     employee_identification_number: [
       { required: true, message: 'Numer identyfikacji pracownika jest wymagany', trigger: 'blur' },
       {
-        min: 11,
-        message: 'Numer identyfikacji pracownika musi mieć minimum 11 znaków',
+        min: 5,
+        message: 'Numer identyfikacji pracownika musi mieć minimum 5 znaków',
+        trigger: 'blur'
+      },
+      {
+        max: 5,
+        message: 'Numer identyfikacji pracownika musi mieć maksimum 5 znaków',
         trigger: 'blur'
       }
     ],
@@ -118,6 +137,11 @@ export const useLecturerStore = defineStore('lecturer', () => {
         min: 9,
         message: 'Seria i numer dowodu osobistego muszą mieć minimum 9 znaków',
         trigger: 'blur'
+      },
+      {
+        max: 9,
+        message: 'Seria i numer dowodu osobistego muszą mieć maksimum 9 znaków',
+        trigger: 'blur'
       }
     ],
     id_card_issuing_authority: [
@@ -126,23 +150,30 @@ export const useLecturerStore = defineStore('lecturer', () => {
         min: 3,
         message: 'Organ wydający dowód osobisty musi mieć minimum 3 znaki',
         trigger: 'blur'
+      },
+      {
+        max: 50,
+        message: 'Organ wydający dowód osobisty musi mieć maksimum 50 znaków',
+        trigger: 'blur'
       }
     ],
     passport_number: [
       { required: true, message: 'Numer paszportu jest wymagany', trigger: 'blur' },
-      { min: 9, message: 'Numer paszportu musi mieć minimum 9 znaków', trigger: 'blur' }
+      { min: 9, message: 'Numer paszportu musi mieć minimum 9 znaków', trigger: 'blur' },
+      { max: 9, message: 'Numer paszportu musi mieć maksimum 9 znaków', trigger: 'blur' }
     ],
     nationality: [
       { required: true, message: 'Narodowość jest wymagana', trigger: 'blur' },
-      { min: 3, message: 'Narodowość musi mieć minimum 3 znaki', trigger: 'blur' }
+      { min: 3, message: 'Narodowość musi mieć minimum 3 znaki', trigger: 'blur' },
+      { max: 50, message: 'Narodowość musi mieć maksimum 50 znaków', trigger: 'blur' }
     ],
     citizenship: [
       { required: true, message: 'Obywatelstwo jest wymagane', trigger: 'blur' },
-      { min: 3, message: 'Obywatelstwo musi mieć minimum 3 znaki', trigger: 'blur' }
+      { min: 3, message: 'Obywatelstwo musi mieć minimum 3 znaki', trigger: 'blur' },
+      { max: 50, message: 'Obywatelstwo musi mieć maksimum 50 znaków', trigger: 'blur' }
     ],
     contract_duration: [
-      { required: true, message: 'Czas trwania umowy jest wymagany', trigger: 'blur' },
-      { min: 3, message: 'Czas trwania umowy musi mieć minimum 3 znaki', trigger: 'blur' }
+      { required: true, message: 'Czas trwania umowy jest wymagany', trigger: 'blur' }
     ],
     gender: [{ required: true, message: 'Płeć jest wymagana', trigger: 'blur' }]
   }) as any
@@ -191,6 +222,29 @@ export const useLecturerStore = defineStore('lecturer', () => {
     }
   }
 
+  const createLecturer = async (id: number) => {
+    try {
+      const response = await axios.post('/lecturers', {
+        userId: id,
+        data: newLecturer.value
+      })
+      Notify.create({
+        type: 'positive',
+        message: 'Wykładowca został dodany'
+      })
+      return response.data
+    } catch (error) {
+      Notify.create({
+        type: 'negative',
+        message: 'Nie udało się dodać wykładowcy: ' + error
+      })
+    }
+  }
+
+  const resetNewLecturer = () => {
+    newLecturer.value = {} as Lecturer
+  }
+
   return {
     lecturer,
     lecturers,
@@ -200,6 +254,8 @@ export const useLecturerStore = defineStore('lecturer', () => {
     newLecturerRules,
     fetchLecturer,
     fetchLecturers,
-    updateLecturer
+    updateLecturer,
+    resetNewLecturer,
+    createLecturer
   }
 })
