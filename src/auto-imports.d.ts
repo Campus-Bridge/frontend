@@ -61,6 +61,7 @@ declare global {
   const useCssVars: typeof import('vue')['useCssVars']
   const useFinanceStore: typeof import('./stores/finance')['useFinanceStore']
   const useI18n: typeof import('vue-i18n')['useI18n']
+  const useLecturerStore: typeof import('./stores/lecturer')['useLecturerStore']
   const useLink: typeof import('vue-router')['useLink']
   const useRoute: typeof import('vue-router')['useRoute']
   const useRouter: typeof import('vue-router')['useRouter']
@@ -138,6 +139,7 @@ declare module 'vue' {
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useFinanceStore: UnwrapRef<typeof import('./stores/finance')['useFinanceStore']>
     readonly useI18n: UnwrapRef<typeof import('vue-i18n')['useI18n']>
+    readonly useLecturerStore: UnwrapRef<typeof import('./stores/lecturer')['useLecturerStore']>
     readonly useLink: UnwrapRef<typeof import('vue-router')['useLink']>
     readonly useRoute: UnwrapRef<typeof import('vue-router')['useRoute']>
     readonly useRouter: UnwrapRef<typeof import('vue-router')['useRouter']>

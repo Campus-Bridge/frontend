@@ -1,14 +1,20 @@
 <template>
   <StudentEditCard v-if="selectedStudent.id" />
+  <LecturerEditCard v-else-if="selectedLecturer.id" />
 </template>
 
 <script lang="ts" setup>
 import StudentEditCard from './editcard/StudentEditCard.vue'
+import LecturerEditCard from './editcard/LecturerEditCard.vue'
 
 import { storeToRefs } from 'pinia'
 import { useStudentStore } from '@/stores/student'
+import { useLecturerStore } from '@/stores/lecturer'
+
 const studentStore = useStudentStore()
 const { selectedStudent } = storeToRefs(studentStore)
+const lecturerStore = useLecturerStore()
+const { selectedLecturer } = storeToRefs(lecturerStore)
 </script>
 
 <style lang="scss" scoped>

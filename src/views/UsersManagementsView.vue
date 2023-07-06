@@ -22,7 +22,14 @@
         </q-dialog>
         <q-card class="my-card users-list">
           <q-card-section>
-            <q-table flat :rows="showUser" :columns="columns" row-key="id" style="height: 100%">
+            <q-table
+              v-if="tab === 'students'"
+              flat
+              :rows="students"
+              :columns="columns.student"
+              row-key="id"
+              style="height: 100%"
+            >
               <template v-slot:body="props">
                 <q-tr
                   :class="userIsSelected(props.row.id)"
@@ -47,6 +54,36 @@
                 </q-tr>
               </template>
             </q-table>
+
+            <q-table
+              v-if="tab === 'lecturer'"
+              flat
+              :rows="lecturers"
+              :columns="columns.lecturer"
+              row-key="id"
+              style="height: 100%"
+            >
+              <template v-slot:body="props">
+                <q-tr
+                  :class="userIsSelected(props.row.id)"
+                  :props="props"
+                  @click="selectUser(props.row)"
+                >
+                  <q-td key="first_name" :props="props">
+                    {{ props.row.first_name }}
+                  </q-td>
+                  <q-td key="last_name" :props="props">
+                    {{ props.row.last_name }}
+                  </q-td>
+                  <q-td key="email" :props="props">
+                    {{ props.row.email }}
+                  </q-td>
+                  <q-td key="subjects_taught" :props="props">
+                    {{ props.row.subjects_taught }}
+                  </q-td>
+                </q-tr>
+              </template>
+            </q-table>
           </q-card-section>
         </q-card>
         <EditCard v-if="selectedStudent" />
@@ -60,82 +97,132 @@ import NavigationBar from '@/components/global/NavigationBar.vue'
 import TopBar from '@/components/dashboard/TopBar.vue'
 
 import { storeToRefs } from 'pinia'
-import { useStudentStore } from '@/stores/student'
+import { useStudentStore, type Student } from '@/stores/student'
+import { useLecturerStore, type Lecturer } from '@/stores/lecturer'
 import EditCard from '@/components/usermanagements/EditCard.vue'
 import NewUserCard from '@/components/usermanagements/NewUserCard.vue'
 const studentStore = useStudentStore()
 const { students, selectedStudent } = storeToRefs(studentStore)
+const lecturerStore = useLecturerStore()
+const { lecturers, selectedLecturer } = storeToRefs(lecturerStore)
 
 const tab = ref('students')
 
 const newUserDialog = ref(false)
 
-const columns = [
-  {
-    name: 'index',
-    label: 'Index',
-    field: 'index',
-    align: 'left',
-    required: true,
-    sortable: true
-  },
-  {
-    name: 'first_name',
-    label: 'First Name',
-    field: 'first_name',
-    align: 'left',
-    required: true,
-    sortable: true
-  },
-  {
-    name: 'last_name',
-    label: 'Last Name',
-    field: 'last_name',
-    align: 'left',
-    required: true,
-    sortable: true
-  },
-  {
-    name: 'email',
-    label: 'Email',
-    field: 'email',
-    align: 'left',
-    required: true,
-    sortable: true
-  },
-  {
-    name: 'field_of_study',
-    label: 'Field of Study',
-    field: 'field_of_study',
-    align: 'left',
-    required: true,
-    sortable: true
-  }
-] as any[]
+const columns = {
+  student: [
+    {
+      name: 'index',
+      label: 'Index',
+      field: 'index',
+      align: 'left',
+      required: true,
+      sortable: true
+    },
+    {
+      name: 'first_name',
+      label: 'First Name',
+      field: 'first_name',
+      align: 'left',
+      required: true,
+      sortable: true
+    },
+    {
+      name: 'last_name',
+      label: 'Last Name',
+      field: 'last_name',
+      align: 'left',
+      required: true,
+      sortable: true
+    },
+    {
+      name: 'email',
+      label: 'Email',
+      field: 'email',
+      align: 'left',
+      required: true,
+      sortable: true
+    },
+    {
+      name: 'field_of_study',
+      label: 'Field of Study',
+      field: 'field_of_study',
+      align: 'left',
+      required: true,
+      sortable: true
+    }
+  ],
+  lecturer: [
+    {
+      name: 'first_name',
+      label: 'First Name',
+      field: 'first_name',
+      align: 'left',
+      required: true,
+      sortable: true
+    },
+    {
+      name: 'last_name',
+      label: 'Last Name',
+      field: 'last_name',
+      align: 'left',
+      required: true,
+      sortable: true
+    },
+    {
+      name: 'email',
+      label: 'Email',
+      field: 'email',
+      align: 'left',
+      required: true,
+      sortable: true
+    },
+    {
+      name: 'subjects_taught',
+      label: 'Subjects Taught',
+      field: 'subjects_taught',
+      align: 'left',
+      required: true,
+      sortable: true
+    }
+  ]
+} as any
 
 function selectUser(user: any) {
-  if (selectedStudent.value.id) {
-    return
+  if (tab.value === 'students') {
+    if (selectedStudent.value.id) {
+      return
+    }
+    selectedStudent.value = user
+  } else {
+    if (selectedLecturer.value.id) {
+      return
+    }
+    selectedLecturer.value = user
   }
-  selectedStudent.value = user
 }
 
 function userIsSelected(id: number) {
-  if (id === selectedStudent.value.id) {
-    return 'active'
+  if (tab.value === 'students') {
+    if (id === selectedStudent.value.id) {
+      return 'active'
+    }
+  } else {
+    if (id === selectedLecturer.value.id) {
+      return 'active'
+    }
   }
 }
 
-const showUser = computed(() => {
-  if (tab.value === 'students') {
-    return students.value
-  } else if (tab.value === 'lecturer') {
-    return []
-  }
+watch(tab, () => {
+  selectedStudent.value = {} as Student
+  selectedLecturer.value = {} as Lecturer
 })
 
 onMounted(async () => {
   await studentStore.fetchStudents()
+  await lecturerStore.fetchLecturers()
 })
 </script>
 
