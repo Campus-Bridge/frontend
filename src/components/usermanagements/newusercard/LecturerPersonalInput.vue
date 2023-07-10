@@ -107,7 +107,7 @@
       style="width: calc(50% - 16px)"
       color="light-green-14"
       v-model="newLecturer.series_and_number_of_identity_card"
-      ref="personalIdNumberRef"
+      ref="seriesAndNumberOfIdentityCardRef"
       type="text"
       label="series_and_number_of_identity_card"
       :rules="newLecturerRules.series_and_number_of_identity_card"
@@ -166,7 +166,7 @@
       type="text"
       label="bank_account_number"
       :rules="newLecturerRules.bank_account_number"
-      maxlength="9"
+      maxlength="26"
     />
   </div>
 </template>
@@ -215,11 +215,6 @@ watch(nationalityRef, () => {
 const citizenshipRef = ref()
 watch(citizenshipRef, () => {
   newLecturerRef.citizenship = citizenshipRef.value
-})
-
-const personalIdNumberRef = ref()
-watch(personalIdNumberRef, () => {
-  newLecturerRef.series_and_number_of_identity_card = personalIdNumberRef.value
 })
 
 const genderRef = ref()

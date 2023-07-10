@@ -113,12 +113,11 @@
       <q-input
         color="light-green-14"
         v-model="selectedLecturer.series_and_number_of_identity_card"
-        ref="personalIdNumberRef"
+        ref="seriesAndNumberOfIdentityCardRef"
         type="text"
         label="series_and_number_of_identity_card"
         :rules="newLecturerRules.series_and_number_of_identity_card"
         maxlength="11"
-        mask="###########"
       />
 
       <q-select
@@ -146,12 +145,12 @@
       />
       <q-input
         color="light-green-14"
-        v-model="selectedLecturer.series_and_number_of_identity_card"
-        ref="seriesAndNumberOfIdentityCardRef"
+        v-model="selectedLecturer.bank_account_number"
+        ref="bankAccountNumberRef"
         type="text"
-        label="series_and_number_of_identity_card"
-        :rules="newLecturerRules.series_and_number_of_identity_card"
-        maxlength="9"
+        label="bank_account_number"
+        :rules="newLecturerRules.bank_account_number"
+        maxlength="26"
       />
       <q-input
         color="light-green-14"
