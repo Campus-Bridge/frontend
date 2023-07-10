@@ -25,6 +25,11 @@ const studentNavigation = [
     link: '/dashboard'
   },
   {
+    name: 'Account',
+    icon: 'account_circle',
+    link: '/account'
+  },
+  {
     name: 'Schedule',
     icon: 'today',
     link: '/schedule'
@@ -48,11 +53,6 @@ const studentNavigation = [
     name: 'Files',
     icon: 'cloud_download',
     link: '/files'
-  },
-  {
-    name: 'Account',
-    icon: 'account_circle',
-    link: '/account'
   }
 ] as NavigationItem[]
 

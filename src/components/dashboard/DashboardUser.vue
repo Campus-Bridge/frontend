@@ -8,7 +8,7 @@
         </div>
       </q-card-section>
       <q-card-section class="q-pt-none" v-if="student">
-        <p>Index: {{ student.index }}</p>
+        <p>Index: {{ student.index_number }}</p>
         <p>Kierunek: Informatyka Stosowana</p>
         <p>Ścieżka: Programowanie aplikacji</p>
       </q-card-section>
@@ -78,26 +78,17 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useUserStore } from '@/stores/user'
 import { useStudentStore } from '@/stores/student'
 import { useFinanceStore } from '@/stores/finance'
 
-const userStore = useUserStore()
 const studentStore = useStudentStore()
 const financeStore = useFinanceStore()
 
 const { student } = storeToRefs(studentStore)
 const { nearFinance, nearFinanceStyle } = storeToRefs(financeStore)
-
-onMounted(async () => {
-  if (userStore.user?.role === 0) {
-    await financeStore.getFinance()
-    await financeStore.getNearFinance()
-  }
-})
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .cards {
   display: grid;
   grid-template-columns: repeat(9, 1fr);

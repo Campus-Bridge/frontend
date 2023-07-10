@@ -20,7 +20,8 @@ export const useFinanceStore = defineStore('finance', () => {
 
   const getFinance = async () => {
     const userStore = useStudentStore()
-    const response = await axios.get('http://localhost:3000/api/finances/' + userStore.student?.id)
+    if (!userStore.student.id) return
+    const response = await axios.get('http://localhost:3000/api/finances/' + userStore.student.id)
     finances.value = response.data
   }
 

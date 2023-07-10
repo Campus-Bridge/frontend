@@ -16,14 +16,19 @@ import DashboardUser from '@/components/dashboard/DashboardUser.vue'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/stores/user'
 import { useStudentStore } from '@/stores/student'
+import { useFinanceStore } from '@/stores/finance'
+
 const userStore = useUserStore()
 const studentStore = useStudentStore()
+const financeStore = useFinanceStore()
 const { student } = storeToRefs(studentStore)
 const { user } = storeToRefs(userStore)
 
 onMounted(async () => {
   if (userStore.user?.role === 0) {
     await studentStore.fetchStudent()
+    await financeStore.getFinance()
+    await financeStore.getNearFinance()
   }
 })
 </script>
