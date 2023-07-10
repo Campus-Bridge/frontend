@@ -12,7 +12,9 @@
         <p>Kierunek: Informatyka Stosowana</p>
         <p>Ścieżka: Programowanie aplikacji</p>
       </q-card-section>
-      <q-inner-loading :showing="!student" label="Loading" style="border-radius: 12px" />
+      <q-inner-loading :showing="!student" style="border-radius: 12px">
+        <q-spinner-gears color="light-green-14" size="3rem" :thickness="5" />
+      </q-inner-loading>
     </q-card>
     <q-card class="my-card finances" :class="nearFinanceStyle">
       <q-card-section class="q-pb-none">
@@ -35,7 +37,9 @@
           </div>
         </q-card-section>
       </transition>
-      <q-inner-loading :showing="!nearFinance" label="Loading" style="border-radius: 12px" />
+      <q-inner-loading :showing="!nearFinance" style="border-radius: 12px">
+        <q-spinner-gears color="light-green-14" size="3rem" :thickness="5" />
+      </q-inner-loading>
     </q-card>
     <q-card class="my-card announcements">
       <q-card-section>
@@ -80,12 +84,23 @@
 import { storeToRefs } from 'pinia'
 import { useStudentStore } from '@/stores/student'
 import { useFinanceStore } from '@/stores/finance'
+import { useUserStore } from '@/stores/user'
 
 const studentStore = useStudentStore()
 const financeStore = useFinanceStore()
 
 const { student } = storeToRefs(studentStore)
 const { nearFinance, nearFinanceStyle } = storeToRefs(financeStore)
+
+const userStore = useUserStore()
+const { user } = storeToRefs(userStore)
+
+onMounted(async () => {
+  if (user.value?.role === 0) {
+    await financeStore.getFinance()
+    await financeStore.getNearFinance()
+  }
+})
 </script>
 
 <style scoped lang="scss">

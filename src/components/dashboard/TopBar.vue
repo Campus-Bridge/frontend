@@ -1,6 +1,12 @@
 <template>
   <div class="topbar">
-    <div class="user_data">
+    <q-spinner-gears
+      color="light-green-14"
+      size="3rem"
+      :thickness="5"
+      v-if="props.firstName === undefined"
+    />
+    <div class="user_data" v-else>
       <q-img
         :src="getAvatar()"
         spinner-color="light-green-14"

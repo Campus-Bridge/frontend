@@ -127,4 +127,11 @@ const submitForm = async () => {
 form {
   width: 30%;
 }
+
+main {
+  width: 100%;
+  height: auto;
+  padding-left: 16px;
+  overflow-y: auto;
+}
 </style>

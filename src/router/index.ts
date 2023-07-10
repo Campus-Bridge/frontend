@@ -5,7 +5,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/login',
       name: 'home',
       component: () => import('@/views/LoginView.vue')
     },
@@ -13,6 +13,14 @@ const router = createRouter({
       path: '/dashboard',
       name: 'dashboard',
       component: () => import('@/views/DashboardView.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/account',
+      name: 'account',
+      component: () => import('@/views/AccountView.vue'),
       meta: {
         requiresAuth: true
       }
@@ -52,7 +60,6 @@ router.beforeEach(async (to, from, next) => {
 
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     const loggedIn = await userStore.isLoggedIn()
-
     if (!loggedIn) {
       next({
         name: 'home'

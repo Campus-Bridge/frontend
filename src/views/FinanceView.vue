@@ -1,43 +1,37 @@
 <template>
-  <div class="application">
-    <NavigationBar />
-    <main>
-      <TopBar :firstName="first_name" :lastName="last_name" />
-      <div class="container">
-        <div class="finance-buttons">
-          <q-btn label="Payments" rounded />
-          <q-btn label="Dane do przelewu" rounded />
-        </div>
-        <q-card class="my-card">
-          <q-table
-            class="my-sticky-virtscroll-table"
-            flat
-            bordered
-            :rows="finances"
-            :columns="columns"
-            row-key="id"
-            style="height: 100%"
-          />
-        </q-card>
-      </div>
-    </main>
+  <div class="container">
+    <div class="finance-buttons">
+      <q-btn label="Payments" rounded />
+      <q-btn label="Dane do przelewu" rounded />
+    </div>
+    <q-card class="my-card">
+      <q-table
+        class="my-sticky-virtscroll-table"
+        flat
+        bordered
+        :rows="finances || []"
+        :columns="columns"
+        row-key="id"
+        style="height: 100%"
+      />
+    </q-card>
   </div>
 </template>
 
 <script setup lang="ts">
-import NavigationBar from '@/components/global/NavigationBar.vue'
-import TopBar from '@/components/dashboard/TopBar.vue'
-
 import { storeToRefs } from 'pinia'
 import { useStudentStore } from '@/stores/student'
 import { useFinanceStore } from '@/stores/finance'
 const studentStore = useStudentStore()
-const { first_name, last_name, dataStudentIsLoaded, id } = storeToRefs(studentStore)
+const { student } = storeToRefs(studentStore)
 const financeStore = useFinanceStore()
 const { finances } = storeToRefs(financeStore)
-watch(id, () => {
-  financeStore.getFinance(id.value)
-})
+watch(
+  () => student.value.id,
+  () => {
+    financeStore.getFinance()
+  }
+)
 const columns = [
   {
     name: 'title',

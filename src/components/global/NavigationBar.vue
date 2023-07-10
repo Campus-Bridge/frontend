@@ -3,7 +3,7 @@
     <section>
       <q-img src="" alt="" width="100%" />
       <ul>
-        <li v-for="(item, index) in NavigationItem" :key="index">
+        <li v-for="(item, index) in userStore.getNavigation" :key="index">
           <router-link :to="item.link">
             <q-icon :name="item.icon">
               <q-tooltip class="text-body2" anchor="center right" self="center left">
@@ -20,8 +20,7 @@
 
 <script lang="ts" setup>
 import { useUserStore } from '@/stores/user'
-
-const NavigationItem = useUserStore().getNavigation()
+const userStore = useUserStore()
 
 const logOut = async () => {
   await useUserStore().logOut()

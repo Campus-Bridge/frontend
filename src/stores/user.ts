@@ -4,6 +4,8 @@ import router from '@/router'
 import axios from 'axios'
 import type { VNodeRef } from 'vue'
 import { Notify } from 'quasar'
+import { useStudentStore } from '@/stores/student'
+import { useLecturerStore } from '@/stores/lecturer'
 
 export interface User {
   id: number
@@ -126,6 +128,17 @@ export const useUserStore = defineStore('user', () => {
         }
       })
       user.value = response.data
+
+      if (user.value.role === 0) {
+        const studentStore = useStudentStore()
+        await studentStore.fetchStudent()
+        console.log(studentStore.students)
+      } else if (user.value.role === 1) {
+        // lecturerStore.fetchLecturer()
+      } else if (user.value.role === 2) {
+        const lecturerStore = useLecturerStore()
+        await lecturerStore.fetchLecturer()
+      }
     } catch (error: any) {
       Notify.create({
         color: 'negative',
@@ -194,7 +207,7 @@ export const useUserStore = defineStore('user', () => {
 
   const logOut = async () => {
     try {
-      const response = await axios.get('/user/logout')
+      await axios.get('/user/logout')
       const { cookies } = useCookies()
       cookies.remove('token')
       user.value = null
@@ -236,15 +249,15 @@ export const useUserStore = defineStore('user', () => {
     return await checkToken()
   }
 
-  const getNavigation = () => {
+  const getNavigation = computed(() => {
     if (user.value?.role === 0) {
       return studentNavigation
-    }
-
-    if (user.value?.role === 1) {
+    } else if (user.value?.role === 1) {
       return adminNavigation
+    } else {
+      return []
     }
-  }
+  })
 
   return {
     user,
